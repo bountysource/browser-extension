@@ -2,7 +2,8 @@
    "content_scripts": [
       {
          "matches": ["https://github.com/*/*/issues/*"],
-         "js": ["bountysource.js", "issue.js"]
+         "js": ["bountysource.js", "issue.js"],
+         "css": ["issue.css"]
       },
       {
          "matches": ["https://github.com/*/*/issues",
