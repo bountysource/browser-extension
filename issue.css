@@ -2,6 +2,14 @@
   border-top: 0;
 }
 
-.bountysource-notice .minibutton {
+.bountysource-notice-header {
+  height: 100%;
+  max-height: 60px;
+  width: auto;
+}
+
+.bountysource-notice-header, .bountysource-notice .minibutton {
+  display: inline-block;
   margin-right: 1em;
+  vertical-align: top;
 }
