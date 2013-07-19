@@ -4,7 +4,6 @@ function updateBounties(issueListGroup) {
     // TODO: Consider requesting all issues up front to avoid all these
     // requests. Might not get 'em all, strictly speaking, even with
     // per_page=250, so this is safer for now.
-    // TODO: cache issues in case the user flips between pages
     Bountysource.getIssueByURL(issueLink.href, function(issue) {
       var total = parseFloat(issue.bounty_total);
       if (total > 0) {

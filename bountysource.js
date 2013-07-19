@@ -36,10 +36,17 @@ var Bountysource = {
     }
   },
   getIssueByURL: function(url, callback) {
-    search(url, function(res) {
-      var issueId = res.redirect_to.split("/")[1];
-      Bountysource.getIssue(issueId, callback);
-    });
+    if (url in this._issueURLCache) {
+      return this._issueURLCache[url];
+    } else {
+      search(url, function(res) {
+        var issueId = res.redirect_to.split("/")[1];
+        Bountysource.getIssue(issueId, function(issue) {
+          Bountysource._issueURLCache[url] = issue;
+          callback(issue);
+        });
+      });
+    }
   },
   getIssue: function(id, callback) {
     var xhrURL = "https://api.bountysource.com/issues/" +
@@ -48,5 +55,6 @@ var Bountysource = {
       var issue = JSON.parse(xhr.responseText);
       callback(issue);
     });
-  }
+  },
+  _issueURLCache: {}
 }
