@@ -4,11 +4,11 @@ function pluralize(count, noun) {
   return phrase;
 }
 
-function buildLink(issue, text, subpath, className) {
+function buildLink(model, text, subpath, className) {
   var link = document.createElement("a");
   link.innerText = text;
-  link.href = "https://www.bountysource.com/" + issue.frontend_path + subpath;
-  link.className = "minibutton " + className;
+  link.href = "https://www.bountysource.com/" + model.frontend_path + subpath;
+  link.className = className;
   return link;
 }
 
@@ -22,15 +22,15 @@ function buildHeader() {
 function buildClaimLink(issue) {
   var text = "Claim $" + parseFloat(issue.bounty_total).toFixed(2) +
              " bounty (" + pluralize(issue.bounties.length, "backer") + ")";
-  return buildLink(issue, text, "/solutions", "primary");
+  return buildLink(issue, text, "/solutions", "minibutton primary");
 }
 
 function buildIncreaseLink(issue) {
-  return buildLink(issue, "Increase bounty", "/bounties");
+  return buildLink(issue, "Increase bounty", "/bounties", "minibutton");
 }
 
 function buildCreateLink(issue) {
-  return buildLink(issue, "Create bounty", "", "primary");
+  return buildLink(issue, "Create bounty", "", "minibutton primary");
 }
 
 function buildNotice() {
@@ -40,7 +40,24 @@ function buildNotice() {
   return notice;
 }
 
+function buildAcceptedSolutionLink(issue, solution) {
+  var text = solution.person.display_name + " has claimed the $" +
+             parseFloat(issue.bounty_total).toFixed(2) + " bounty!";
+  return buildLink(issue, text, "/solutions", "bountysource-accepted-solution");
+}
+
 function updateNotice(issue) {
+  // Link to the accepted solution, if present.
+  var solution;
+  for (var i = 0; i < issue.submitted_solutions.length; i++) {
+    solution = issue.submitted_solutions[i];
+    if (solution.accepted) {
+      notice.appendChild(buildAcceptedSolutionLink(issue, solution));
+      return;
+    }
+  }
+
+  // No accepted solution yet? Set up the claim/create buttons.
   if (parseFloat(issue.bounty_total) > 0) {
     notice.appendChild(buildClaimLink(issue));
     notice.appendChild(buildIncreaseLink(issue));

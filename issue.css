@@ -8,8 +8,12 @@
   width: auto;
 }
 
-.bountysource-notice-header, .bountysource-notice .minibutton {
+.bountysource-notice-header, .bountysource-notice a {
   display: inline-block;
   margin-right: 1em;
   vertical-align: top;
+}
+
+.bountysource-accepted-solution {
+  margin-top: 6px;
 }
