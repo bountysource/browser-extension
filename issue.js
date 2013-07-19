@@ -22,11 +22,19 @@ function buildIncreaseLink(issue) {
   return buildLink(issue, "Increase bounty on Bountysource", "/bounties");
 }
 
+function buildCreateLink(issue) {
+  return buildLink(issue, "Create bounty on Bountysource", "");
+}
+
 function buildNotice(issue) {
   var notice = document.createElement("div");
   notice.className = "bountysource-notice discusion-topic-infobar";
-  notice.appendChild(buildClaimLink(issue));
-  notice.appendChild(buildIncreaseLink(issue));
+  if (parseFloat(issue.bounty_total) > 0) {
+    notice.appendChild(buildClaimLink(issue));
+    notice.appendChild(buildIncreaseLink(issue));
+  } else {
+    notice.appendChild(buildCreateLink(issue));
+  }
   return notice;
 }
 
