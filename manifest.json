@@ -1,0 +1,18 @@
+{
+   "content_scripts": [
+      {
+         "matches": ["https://github.com/*/*/issues/*"],
+         "js": ["bountysource.js", "issue.js"]
+      },
+      {
+         "matches": ["https://github.com/*/*/issues",
+                     "https://github.com/*/*/issues?*"],
+         "js": ["bountysource.js", "issues.js"]
+      }
+   ],
+   "description": "Embed Bountysource bounties in Github issues",
+   "manifest_version": 2,
+   "name": "Bountysource in Github",
+   "permissions": [ "*://github.com/*", "https://api.bountysource.com/*" ],
+   "version": "1.0.0"
+}
