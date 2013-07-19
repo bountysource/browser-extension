@@ -1,20 +1,25 @@
 {
-   "content_scripts": [
-      {
-         "matches": ["https://github.com/*/*/issues/*"],
-         "js": ["bountysource.js", "issue.js"],
-         "css": ["issue.css"],
-         "run_at": "document_end" // no reflow
-      },
-      {
-         "matches": ["https://github.com/*/*/issues",
-                     "https://github.com/*/*/issues?*"],
-         "js": ["bountysource.js", "issues.js"]
-      }
-   ],
-   "description": "Embed Bountysource bounties in Github issues",
-   "manifest_version": 2,
-   "name": "Bountysource in Github",
-   "permissions": [ "https://github.com/*", "https://api.bountysource.com/*" ],
-   "version": "1.0.0"
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*/*/issues/*"],
+      "js": ["bountysource.js", "issue.js"],
+      "css": ["issue.css"],
+      "run_at": "document_end" // no reflow
+    },
+    {
+      "matches": ["https://github.com/*/*/issues",
+              "https://github.com/*/*/issues?*"],
+      "js": ["bountysource.js", "issues.js"]
+    }
+  ],
+  "description": "Embed Bountysource bounties in Github issues",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "manifest_version": 2,
+  "name": "Bountysource in Github",
+  "permissions": [ "https://github.com/*", "https://api.bountysource.com/*" ],
+  "version": "1.0.0"
 }
