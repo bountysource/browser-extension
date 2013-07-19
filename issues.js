@@ -1,9 +1,3 @@
-var recentIssueListGroup = null;
-
-function getIssueListGroup() {
-  return document.querySelector(".issue-list-group");
-}
-
 function updateBounties(issueListGroup) {
   var issueLinks = issueListGroup.querySelectorAll("h4 a");
   Array.prototype.forEach.call(issueLinks, function(issueLink) {
@@ -21,12 +15,14 @@ function updateBounties(issueListGroup) {
   });
 }
 
-// TODO: Ew ew ew! Watch the list some other way; mutation observers?
+// TODO: Ew ew ew! Right now we check the list element every second to see if
+// it's been replaced yet. If so, the user has moved to a new page with new
+// issues, so we need to update the bounties. It's not super-reliable to hook
+// into Github's own code, though. Watch with mutation observers, maybe?
+var recentIssueListGroup = null;
 setInterval(function() {
-  var currentIssueListGroup = getIssueListGroup();
-  console.log(currentIssueListGroup);
+  var currentIssueListGroup = document.querySelector(".issue-list-group");
   if (currentIssueListGroup !== recentIssueListGroup) {
-    console.log("Updating", currentIssueListGroup);
     updateBounties(currentIssueListGroup);
     recentIssueListGroup = currentIssueListGroup;
   }
