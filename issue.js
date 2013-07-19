@@ -26,22 +26,27 @@ function buildCreateLink(issue) {
   return buildLink(issue, "Create bounty on Bountysource", "");
 }
 
-function buildNotice(issue) {
+function buildNotice() {
   var notice = document.createElement("div");
   notice.className = "bountysource-notice discusion-topic-infobar";
+  return notice;
+}
+
+function updateNotice(issue) {
   if (parseFloat(issue.bounty_total) > 0) {
     notice.appendChild(buildClaimLink(issue));
     notice.appendChild(buildIncreaseLink(issue));
   } else {
     notice.appendChild(buildCreateLink(issue));
   }
-  return notice;
 }
 
-Bountysource.getIssueByURL(document.location.href, function(issue) {
-    var topicWrapper = document.querySelector(".discussion-topic");
-    // Not a typo below; they use both discussion and discusion :/
-    var infobar = topicWrapper.querySelector(".discusion-topic-infobar");
-    var notice = buildNotice(issue);
-    topicWrapper.insertBefore(notice, infobar.nextSibling);
-});
+// Add the notice immediately, even if we don't have data for it yet, to avoid
+// ugly reflows. Class names aren't typos; Github really does use both
+// "discussion" and "discusion".
+var topicWrapper = document.querySelector(".discussion-topic");
+var infobar = topicWrapper.querySelector(".discusion-topic-infobar");
+var notice = buildNotice();
+topicWrapper.insertBefore(notice, infobar.nextSibling);
+
+Bountysource.getIssueByURL(document.location.href, updateNotice);

@@ -3,7 +3,8 @@
       {
          "matches": ["https://github.com/*/*/issues/*"],
          "js": ["bountysource.js", "issue.js"],
-         "css": ["issue.css"]
+         "css": ["issue.css"],
+         "run_at": "document_end" // no reflow
       },
       {
          "matches": ["https://github.com/*/*/issues",
