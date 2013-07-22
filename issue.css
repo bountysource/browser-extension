@@ -2,13 +2,13 @@
   border-top: 0;
 }
 
-.bountysource-notice-header {
+.bountysource-notice-header img {
   height: 100%;
   max-height: 60px;
   width: auto;
 }
 
-.bountysource-notice-header, .bountysource-notice a {
+.bountysource-notice-header img, .bountysource-notice .minibutton {
   display: inline-block;
   margin-right: 1em;
   vertical-align: top;

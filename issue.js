@@ -13,9 +13,14 @@ function buildLink(model, text, subpath, className) {
 }
 
 function buildHeader() {
-  var header = document.createElement("img");
-  header.src = chrome.runtime.getURL("/logo.png");
+  var header = document.createElement("a");
+  header.href = "https://www.bountysource.com/";
   header.className = "bountysource-notice-header";
+
+  var logo = document.createElement("img");
+  logo.src = chrome.runtime.getURL("/logo.png");
+  header.appendChild(logo);
+
   return header;
 }
 
@@ -64,6 +69,9 @@ function updateNotice(issue) {
   } else {
     notice.appendChild(buildCreateLink(issue));
   }
+
+  var issuePath = issue.frontend_path;
+  notice.querySelector(".bountysource-notice-header").href += issuePath;
 }
 
 // Add the notice immediately, even if we don't have data for it yet, to avoid
