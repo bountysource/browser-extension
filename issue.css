@@ -14,9 +14,15 @@
   vertical-align: top;
 }
 
-.bountysource-accepted-solution, .bountysource-notice:not(.loaded)::after {
+.bountysource-accepted-solution, .bountysource-notice-error,
+  .bountysource-notice:not(.loaded)::after
+{
   display: inline-block;
   margin-top: 6px;
+}
+
+.bountysource-notice-error {
+  opacity: .5;
 }
 
 .bountysource-notice:not(.loaded)::after {

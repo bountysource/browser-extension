@@ -36,7 +36,7 @@ var Bountysource = {
       });
     }
   },
-  getIssueByURL: function(url, callback) {
+  getIssueByURL: function(url, callback, onError) {
     if (url in this._issueURLCache) {
       return this._issueURLCache[url];
     } else {
@@ -45,16 +45,20 @@ var Bountysource = {
         Bountysource.getIssue(issueId, function(issue) {
           Bountysource._issueURLCache[url] = issue;
           callback(issue);
-        });
+        }, onError);
       });
     }
   },
-  getIssue: function(id, callback) {
+  getIssue: function(id, callback, onError) {
     var xhrURL = "https://api.bountysource.com/issues/" +
                  encodeURIComponent(id);
     sendXHR(xhrURL, function(xhr) {
-      var issue = JSON.parse(xhr.responseText);
-      callback(issue);
+      if (xhr.status === 200) {
+        var issue = JSON.parse(xhr.responseText);
+        callback(issue);
+      } else if (onError) {
+        onError(xhr);
+      }
     });
   },
   _issueURLCache: {}

@@ -76,6 +76,16 @@ function updateNotice(issue) {
   notice.classList.add("loaded");
 }
 
+function onAPIError(xhr) {
+  var message = document.createElement("p");
+  message.className = "bountysource-notice-error";
+  message.innerText = "Could not connect to Bountysource API. " +
+                      "Try again later.";
+  notice.appendChild(message);
+
+  notice.classList.add("loaded");
+}
+
 // Add the notice immediately, even if we don't have data for it yet, to avoid
 // ugly reflows. Class names aren't typos; Github really does use both
 // "discussion" and "discusion".
@@ -84,4 +94,4 @@ var infobar = topicWrapper.querySelector(".discusion-topic-infobar");
 var notice = buildNotice();
 topicWrapper.insertBefore(notice, infobar.nextSibling);
 
-Bountysource.getIssueByURL(document.location.href, updateNotice);
+Bountysource.getIssueByURL(document.location.href, updateNotice, onAPIError);
