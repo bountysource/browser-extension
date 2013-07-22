@@ -2,15 +2,15 @@
   "content_scripts": [
     {
       "matches": ["https://github.com/*/*/issues/*"],
-      "js": ["bountysource.js", "issue.js"],
-      "css": ["issue.css"],
+      "js": ["bountysource.js", "github/issue.js"],
+      "css": ["github/issue.css"],
       "run_at": "document_end" // no reflow
     },
     {
       "matches": ["https://github.com/*/*/issues",
               "https://github.com/*/*/issues?*"],
-      "js": ["bountysource.js", "issues.js"],
-      "css": ["issues.css"]
+      "js": ["bountysource.js", "github/issues.js"],
+      "css": ["github/issues.css"]
     }
   ],
   "description": "View Bountysource bounties directly from your bug tracker",
