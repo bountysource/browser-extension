@@ -72,6 +72,8 @@ function updateNotice(issue) {
 
   var issuePath = issue.frontend_path;
   notice.querySelector(".bountysource-notice-header").href += issuePath;
+
+  notice.classList.add("loaded");
 }
 
 // Add the notice immediately, even if we don't have data for it yet, to avoid

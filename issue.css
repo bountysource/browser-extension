@@ -14,6 +14,19 @@
   vertical-align: top;
 }
 
-.bountysource-accepted-solution {
+.bountysource-accepted-solution, .bountysource-notice:not(.loaded)::after {
+  display: inline-block;
   margin-top: 6px;
 }
+
+.bountysource-notice:not(.loaded)::after {
+  content: "Loading…";
+  opacity: 0;
+
+  -webkit-animation-delay: 2s;
+  -webkit-animation-duration: .5s;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeIn { from { opacity: 0; } to { opacity: .5; } }
