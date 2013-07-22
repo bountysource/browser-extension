@@ -22,6 +22,7 @@ var Bountysource = {
       var trackerId = res.redirect_to.split("/")[1];
       var tracker = Object.create(Bountysource.Tracker);
       tracker.id = trackerId;
+      tracker.url = "https://www.bountysource.com/trackers/" + trackerId;
       callback(tracker);
     });
   },

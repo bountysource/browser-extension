@@ -26,3 +26,15 @@ setInterval(function() {
     recentIssueListGroup = currentIssueListGroup;
   }
 }, 1000);
+
+// Add View on Bountysource link.
+// The API expects the home page URL, not the issues list URL.
+var trackerURL = document.querySelector('meta[property="og:url"]').content;
+Bountysource.getTrackerByURL(trackerURL, function(tracker) {
+  var remoteTrackerLink = document.createElement("a");
+  remoteTrackerLink.href = tracker.url;
+  remoteTrackerLink.className = "minibutton blue";
+  remoteTrackerLink.innerText = "View on Bountysource";
+  var newIssueButton = document.querySelector(".js-new-issue-button");
+  newIssueButton.parentNode.insertBefore(remoteTrackerLink, newIssueButton);
+});

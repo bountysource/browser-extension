@@ -9,7 +9,8 @@
     {
       "matches": ["https://github.com/*/*/issues",
               "https://github.com/*/*/issues?*"],
-      "js": ["bountysource.js", "issues.js"]
+      "js": ["bountysource.js", "issues.js"],
+      "css": ["issues.css"]
     }
   ],
   "description": "View Bountysource bounties directly from your bug tracker",
