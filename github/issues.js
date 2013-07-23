@@ -1,5 +1,6 @@
-function updateBounties(group) {
-  var issueLinks = group.querySelectorAll("h4 a");
+function updateBounties(list) {
+  var issueLinks = list.querySelector(".issue-list-group").
+    querySelectorAll("h4 a");
   Array.prototype.forEach.call(issueLinks, function(issueLink) {
     // TODO: Consider requesting all issues up front to avoid all these
     // requests. Might not get 'em all, strictly speaking, even with
@@ -14,22 +15,12 @@ function updateBounties(group) {
   });
 }
 
-// TODO: Ew ew ew! Right now we check the list element every second to see if
-// it's been replaced yet. If so, the user has moved to a new page with new
-// issues, so we need to update the bounties. It's not super-reliable to hook
-// into Github's own code, though. Watch with mutation observers, maybe?
-var recentGroup = null;
-setInterval(function() {
-  var currentGroup = document.querySelector(".issue-list-group");
-  if (currentGroup !== recentGroup) {
-    // It's possible that there might be no group because there are no results.
-    // Okay; don't do the update, but still set the recent group.
-    if (currentGroup) {
-      updateBounties(currentGroup);
-    }
-    recentGroup = currentGroup;
-  }
-}, 1000);
+var list = document.getElementById("issues_list");
+var observer = new WebKitMutationObserver(function(mutations) {
+  updateBounties(list);
+});
+observer.observe(list, {childList: true});
+updateBounties(list);
 
 // Add View on Bountysource link.
 // The API expects the home page URL, not the issues list URL.
