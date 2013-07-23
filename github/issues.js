@@ -1,5 +1,5 @@
-function updateBounties(issueListGroup) {
-  var issueLinks = issueListGroup.querySelectorAll("h4 a");
+function updateBounties(group) {
+  var issueLinks = group.querySelectorAll("h4 a");
   Array.prototype.forEach.call(issueLinks, function(issueLink) {
     // TODO: Consider requesting all issues up front to avoid all these
     // requests. Might not get 'em all, strictly speaking, even with
@@ -18,12 +18,16 @@ function updateBounties(issueListGroup) {
 // it's been replaced yet. If so, the user has moved to a new page with new
 // issues, so we need to update the bounties. It's not super-reliable to hook
 // into Github's own code, though. Watch with mutation observers, maybe?
-var recentIssueListGroup = null;
+var recentGroup = null;
 setInterval(function() {
-  var currentIssueListGroup = document.querySelector(".issue-list-group");
-  if (currentIssueListGroup !== recentIssueListGroup) {
-    updateBounties(currentIssueListGroup);
-    recentIssueListGroup = currentIssueListGroup;
+  var currentGroup = document.querySelector(".issue-list-group");
+  if (currentGroup !== recentGroup) {
+    // It's possible that there might be no group because there are no results.
+    // Okay; don't do the update, but still set the recent group.
+    if (currentGroup) {
+      updateBounties(currentGroup);
+    }
+    recentGroup = currentGroup;
   }
 }, 1000);
 

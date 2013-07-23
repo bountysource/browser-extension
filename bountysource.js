@@ -43,7 +43,7 @@ var Bountysource = {
   },
   getIssueByURL: function(url, callback, onError) {
     if (url in this._issueURLCache) {
-      return this._issueURLCache[url];
+      callback(this._issueURLCache[url]);
     } else {
       search(url, function(res) {
         var issueId = res.redirect_to.split("/")[1];
