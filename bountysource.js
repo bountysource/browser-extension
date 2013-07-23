@@ -7,13 +7,21 @@ function sendXHR(url, callback) {
   xhr.send();
 }
 
-function search(query, callback) {
+function getJSON(url, callback, onError) {
+  sendXHR(url, function(xhr) {
+    if (xhr.status === 200) {
+      var res = JSON.parse(xhr.responseText)
+      callback(res);
+    } else if(onError) {
+      onError(xhr);
+    }
+  });
+}
+
+function search(query, callback, onError) {
   var xhrURL = "https://api.bountysource.com/search?" + 
                  "_method=POST&per_page=1&query=" + encodeURIComponent(query);
-  sendXHR(xhrURL, function(xhr) {
-    var res = JSON.parse(xhr.responseText);
-    callback(res);
-  });
+  getJSON(xhrURL, callback, onError);
 }
 
 var Bountysource = {
@@ -27,13 +35,10 @@ var Bountysource = {
     });
   },
   Tracker: {
-    getIssues: function(callback) {
+    getIssues: function(callback, onError) {
       var xhrURL = "https://api.bountysource.com/trackers/48759-jshint/issues?" +
                    "_method=GET&per_page=250";
-      sendXHR(xhrURL, function(xhr) {
-        var issues = JSON.parse(xhr.responseText);
-        callback(issues);
-      });
+      getJSON(xhrURL, callback, onError);
     }
   },
   getIssueByURL: function(url, callback, onError) {
@@ -46,20 +51,13 @@ var Bountysource = {
           Bountysource._issueURLCache[url] = issue;
           callback(issue);
         }, onError);
-      });
+      }, onError);
     }
   },
   getIssue: function(id, callback, onError) {
     var xhrURL = "https://api.bountysource.com/issues/" +
                  encodeURIComponent(id);
-    sendXHR(xhrURL, function(xhr) {
-      if (xhr.status === 200) {
-        var issue = JSON.parse(xhr.responseText);
-        callback(issue);
-      } else if (onError) {
-        onError(xhr);
-      }
-    });
+    getJSON(xhrURL, callback, onError);
   },
   _issueURLCache: {}
 }
