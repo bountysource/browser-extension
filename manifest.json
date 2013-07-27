@@ -1,0 +1,29 @@
+{
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*/*/issues/*"],
+      "js": ["bountysource.js", "github/issue.js"],
+      "css": ["github/issue.css"],
+      "run_at": "document_end" // no reflow
+    },
+    {
+      "matches": ["https://github.com/*/*/issues",
+              "https://github.com/*/*/issues?*"],
+      "js": ["bountysource.js", "github/issues.js"],
+      "css": ["github/issues.css"]
+    }
+  ],
+  "description": "View Bountysource bounties directly from your bug tracker",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "manifest_version": 2,
+  "name": "Bountysource",
+  "permissions": [ "https://github.com/*", "https://api.bountysource.com/*" ],
+  "version": "1.0.0",
+  "web_accessible_resources": [
+    "logo.png"
+  ]
+}

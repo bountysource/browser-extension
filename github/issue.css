@@ -1,0 +1,38 @@
+.bountysource-notice.discusion-topic-infobar {
+  border-top: 0;
+}
+
+.bountysource-notice-header img {
+  height: 100%;
+  max-height: 60px;
+  width: auto;
+}
+
+.bountysource-notice-header img, .bountysource-notice .minibutton {
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: top;
+}
+
+.bountysource-accepted-solution, .bountysource-notice-error,
+  .bountysource-notice:not(.loaded)::after
+{
+  display: inline-block;
+  margin-top: 6px;
+}
+
+.bountysource-notice-error {
+  opacity: .5;
+}
+
+.bountysource-notice:not(.loaded)::after {
+  content: "Loading…";
+  opacity: 0;
+
+  -webkit-animation-delay: 2s;
+  -webkit-animation-duration: .5s;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeIn { from { opacity: 0; } to { opacity: .5; } }
