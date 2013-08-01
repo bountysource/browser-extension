@@ -4,7 +4,7 @@
       "matches": ["https://github.com/*/*/issues/*"],
       "js": ["bountysource.js", "github/issue.js"],
       "css": ["github/issue.css"],
-      "run_at": "document_end" // no reflow
+      "run_at": "document_end"
     },
     {
       "matches": ["https://github.com/*/*/issues",
@@ -22,7 +22,7 @@
   "manifest_version": 2,
   "name": "Bountysource",
   "permissions": [ "https://github.com/*", "https://api.bountysource.com/*" ],
-  "version": "1.0.0",
+  "version": "0.0.1",
   "web_accessible_resources": [
     "logo.png"
   ]
