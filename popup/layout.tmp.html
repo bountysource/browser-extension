@@ -1,0 +1,33 @@
+<div class="navbar navbar-default navbar-static-top" role="navigation" style="border-top: 4px solid #129e5e">
+  <!-- <div class="navbar-header">
+    <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+    <a class="navbar-brand" href="/" style="padding-top: 10px; padding-bottom: 10px;">
+      <img src='../logo.png' style="max-height: 45px; max-width: 120px;"/>
+    </a>
+  </div> -->
+
+  <form class="navbar-form" role="search" ng-controller="TypeaheadController" ng-submit="typeahead.submit_search()">
+
+{{ results }}
+
+    <div class="input-group">
+
+      <script type="text/ng-template" id="typeahead_template.html">
+        <a>
+          <img ng-if="match.model.type==='Team'" ng-src="{{match.model.image_url}}" style="width: 16px; height:16px"/>
+          <span class="glyphicon glyphicon-tag" ng-if="match.model.type==='Tag'"></span>
+          <span bind-html-unsafe="match.label | encodeEntities | typeaheadHighlight:query"></span>
+        </a>
+      </script>
+
+
+      <input type="text" class="form-control" ng-model="typeahead.query" placeholder="Project Name" typeahead="tag.name for tag in typeahead.update_results($viewValue)" typeahead-on-select="typeahead.selected($item)" typeahead-focus-first="false" typeahead-template-url="typeahead_template.html" />
+
+      <div class="input-group-btn">
+        <button class="btn btn-default" type="submit">
+          <i class="glyphicon glyphicon-search"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

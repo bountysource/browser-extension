@@ -3,8 +3,8 @@
 angular.module('app').config(function($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'home.html', 
-      controller: 'MainController'
+      templateUrl: 'home.html',
+      controller: 'HomeController'
     })
     .when('/teams/:id', {
       templateUrl: 'teams.html',

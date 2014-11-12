@@ -1,0 +1,55 @@
+<div ng-hide="team">
+  Loading...
+</div>
+
+<div ng-show="team" style="min-width: 800px;">
+  <table>
+    <tr>
+      <td><img ng-src="{{team.image_url_small}}" style="width: 75px; height: 75px; border-radius:10px; margin: 0 10px 10px 0" /></td>
+      <td>
+        <h4 style="margin-top: 0">{{team.name}}</h4>
+        <p>{{team.bio}}</p>
+      </td>
+    </tr>
+  </table>
+
+  <ul class="nav nav-tabs" style="margin-bottom: 10px">
+    <li role="presentation" class="active"><a href="#">Top Issues</a></li>
+    <li role="presentation"><a href="#">Something</a></li>
+    <li role="presentation"><a href="#">Messages</a></li>
+  </ul>
+
+  <div ng-show="issues.length>0">
+    <table class="table table-condensed">
+      <tr ng-repeat="issue in issues">
+        <td><a ng-href="https://www.bountysource.com/issues/{{issue.slug}}" target="_blank">{{issue.title}}</a></td>
+        <td><a ng-href="https://www.bountysource.com/issues/{{issue.slug}}" target="_blank"><span class="label label-success">{{issue.bounty_total}}</span></a></td>
+      </tr>
+    </table>
+  </div>
+
+
+
+    <!-- <h4>Links</h4>
+    <ul>
+      <li><a ng-href="#">Bountysource</a></li>
+      <li><a ng-href="#">GitHub Issue Tracker</a></li>
+      <li><a ng-href="#">Docs</a></li>
+      <li><a ng-href="#">Download (1.2.5)</a></li>
+    </ul>
+
+    <ul class="list-group">
+      <li class="list-group-item">
+        <span class="badge">{{team.issues_count}}</span>
+        Issues
+      </li>
+      <li class="list-group-item">
+        <span class="badge">{{team.open_bounties_amount}}</span>
+        Open Bounties
+      </li>
+      <li class="list-group-item">
+        <span class="badge">{{team.closed_bounties_amount}}</span>
+        Closed Bounties
+      </li>
+    </ul> -->
+</div>

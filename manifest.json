@@ -7,13 +7,7 @@
       "run_at": "document_end"
     },
     {
-      "matches": ["https://github.com/*/*/issues",
-              "https://github.com/*/*/issues?*"],
-      "js": ["bountysource.js", "github/issues.js"],
-      "css": ["github/issues.css"]
-    },
-    {
-      "matches": ["*://*/*/bugzilla.cgi"],
+      "matches": ["*://*/*/show_bug.cgi*"],
       "js": ["bountysource.js", "bugzilla/bugzilla.js"],
       "css": ["bugzilla/bugzilla.css"]
     }
@@ -32,7 +26,7 @@
     "logo.png"
   ],
   "browser_action": {
-    "default_icon": "icons/48.png",
+    "default_icon": "icons/38.png",
     "default_popup": "popup/layout.html"
   }
 }

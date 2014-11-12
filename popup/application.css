@@ -1,1 +1,9 @@
-body { min-width: 500px; overflow-x: hidden; }
+body { overflow-x: hidden; }
+.typeahead-results { margin-top: 0; }
+.typeahead-results td { cursor: pointer; }
+.typeahead-highlighted-row td { background: #428bca; color: white; }
+
+.table-no-border td, .table-no-border th, .table.table-no-border-top tr:first-of-type td, .table.table-no-border-top tr:first-of-type th {
+  border: 0 !important;
+  background-color: transparent !important;
+}

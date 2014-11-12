@@ -1,4 +1,10 @@
-.bountysource-notice.discusion-topic-infobar {
+.bountysource-summary .timeline-comment { padding: 0 15px; border-color: #129e5e; }
+.bountysource-summary .timeline-comment-wrapper>.timeline-comment:before { border-right-color: #129e5e; }
+.bountysource-summary .timeline-comment-wrapper>.timeline-comment:after { border-right-color: #fff; }
+.bountysource-summary .plus-one { font-size:18px; font-weight: normal; padding: 3px 13px; }
+
+
+/*.bountysource-notice.discusion-topic-infobar {
   border-top: 0;
 }
 
@@ -35,4 +41,4 @@
   -webkit-animation-name: fadeIn;
 }
 
-@-webkit-keyframes fadeIn { from { opacity: 0; } to { opacity: .5; } }
+@-webkit-keyframes fadeIn { from { opacity: 0; } to { opacity: .5; } }*/
