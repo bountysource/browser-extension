@@ -1,3 +1,5 @@
+alert('issue.js');
+
 function pluralize(count, noun) {
   var phrase = count + " " + noun;
   if (count !== 1) phrase += "s";
@@ -89,9 +91,8 @@ function onAPIError(xhr) {
 // Add the notice immediately, even if we don't have data for it yet, to avoid
 // ugly reflows. Class names aren't typos; Github really does use both
 // "discussion" and "discusion".
-var topicWrapper = document.querySelector(".discussion-topic");
-var infobar = topicWrapper.querySelector(".discusion-topic-infobar");
+var topicWrapper = document.getElementsByClassName("discussion-sidebar")[0];
 var notice = buildNotice();
-topicWrapper.insertBefore(notice, infobar.nextSibling);
+topicWrapper.insertBefore(notice, topicWrapper.firstChild);
 
 Bountysource.getIssueByURL(document.location.href, updateNotice, onAPIError);

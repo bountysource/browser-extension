@@ -1,0 +1,5 @@
+<a>
+  <img ng-if="match.model.type==='Team'" ng-src="{{match.model.image_url %> %>" style="width: 16px; height:16px"/>
+  <span class="glyphicon glyphicon-tag" ng-if="match.model.type==='Tag'"></span>
+  <span bind-html-unsafe="match.label | encodeEntities | typeaheadHighlight:query"></span>
+</a>

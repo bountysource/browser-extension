@@ -11,6 +11,11 @@
               "https://github.com/*/*/issues?*"],
       "js": ["bountysource.js", "github/issues.js"],
       "css": ["github/issues.css"]
+    },
+    {
+      "matches": ["*://*/*/bugzilla.cgi"],
+      "js": ["bountysource.js", "bugzilla/bugzilla.js"],
+      "css": ["bugzilla/bugzilla.css"]
     }
   ],
   "description": "View Bountysource bounties directly from your bug tracker",
@@ -25,5 +30,9 @@
   "version": "0.0.1",
   "web_accessible_resources": [
     "logo.png"
-  ]
+  ],
+  "browser_action": {
+    "default_icon": "icons/48.png",
+    "default_popup": "popup/layout.html"
+  }
 }
