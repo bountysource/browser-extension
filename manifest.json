@@ -1,32 +1,31 @@
 {
   "content_scripts": [
     {
-      "matches": ["https://github.com/*/*/issues/*"],
-      "js": ["bountysource.js", "github/issue.js"],
-      "css": ["github/issue.css"],
+      "matches": ["*://*/*"],
+      "js": ["javascripts/bountysource.js", "javascripts/thumbs_up_box.js"],
+      "css": ["stylesheets/thumbs.css"],
       "run_at": "document_end"
-    },
-    {
-      "matches": ["*://*/*/show_bug.cgi*"],
-      "js": ["bountysource.js", "bugzilla/bugzilla.js"],
-      "css": ["bugzilla/bugzilla.css"]
     }
   ],
   "description": "View Bountysource bounties directly from your bug tracker",
   "icons": {
-    "16": "icons/16.png",
-    "48": "icons/48.png",
-    "128": "icons/128.png"
+    "16": "images/bountysource-16.png",
+    "48": "images/bountysource-48.png",
+    "128": "images/bountysource-128.png"
   },
   "manifest_version": 2,
   "name": "Bountysource",
-  "permissions": [ "https://github.com/*", "https://api.bountysource.com/*" ],
+  "permissions": [ "cookies", "https://www.bountysource.com/*", "https://localhost/*" ],
   "version": "0.0.1",
   "web_accessible_resources": [
-    "logo.png"
+    "images/thumbsup-32.png",
+    "images/spinner.gif"
   ],
+  "background": {
+    "scripts": ["javascripts/bountysource.js","javascripts/background.js"]
+  },
   "browser_action": {
-    "default_icon": "icons/38.png",
+    "default_icon": "images/thumbsup-32.png",
     "default_popup": "popup/layout.html"
   }
 }

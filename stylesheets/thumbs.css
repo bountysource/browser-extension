@@ -1,0 +1,32 @@
+.bountysource-thumbs-box { position: absolute; width:50px; }
+.bountysource-thumbs-box .thumb-wrapper { text-align: center; border: 1px solid #ccc; border-top-left-radius: 3px; border-top-right-radius: 3px; background-image: linear-gradient(#fcfcfc, #eee); cursor: pointer; padding: 4px 0 6px; }
+.bountysource-thumbs-box .thumb-wrapper img { width: 32px;height: 32px; }
+.bountysource-thumbs-box .thumb-wrapper:hover { background-image: linear-gradient(#ececec, #ddd); }
+.bountysource-thumbs-box .info-wrapper { background: white; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; border-left: 1px solid #ccc; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; height: 20px; text-align: center; overflow: hidden; color: #333; font-size: 17px; line-height: 20px; font-family: Helvetica, arial, freesans, clean, sans-serif; white-space: nowrap; }
+.bountysource-thumbs-box .info-wrapper img { padding-top: 4px; }
+
+.bountysource-thumbs-box-mini { display: inline-block; white-space: nowrap; border-radius: 2px; border: 1px solid #ccc; line-height:19px; }
+.bountysource-thumbs-box-mini .thumb-wrapper { display: inline-block; padding: 0 2px; cursor: pointer; background-image: linear-gradient(#fcfcfc, #eee); border-right: 1px solid #ccc; }
+.bountysource-thumbs-box-mini .thumb-wrapper:hover { background-image: linear-gradient(#ececec, #ddd); }
+.bountysource-thumbs-box-mini .info-wrapper { display: inline-block; padding: 0 3px; color: #333; font-size: 13px; line-height: 20px; font-family: Helvetica, arial, freesans, clean, sans-serif; }
+.bountysource-thumbs-box-mini.thumbs-at-zero .info-wrapper { display: none; }
+.bountysource-thumbs-box-mini.thumbs-at-zero .thumb-wrapper { border-right: 0; }
+
+.bountysource-thumbs-box .thumb-wrapper img,
+.bountysource-thumbs-box-mini .thumb-wrapper img {
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'lightgray\'><feColorMatrix type=\'saturate\' values=\'0\'/><feComponentTransfer><feFuncR type=\'linear\' slope=\'1.2\'/>      <feFuncG type=\'linear\' slope=\'1.2\'/>      <feFuncB type=\'linear\' slope=\'1.2\'/></feComponentTransfer></filter></svg>#lightgray"); /* Firefox 10+, Firefox on Android */
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(100%) brightness(110%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
+  opacity: 0.7;
+}
+.bountysource-thumbs-box .thumb-wrapper:hover img,
+.bountysource-thumbs-box.has-thumbed-up .thumb-wrapper img,
+.bountysource-thumbs-box-mini .thumb-wrapper:hover img,
+.bountysource-thumbs-box-mini.has-thumbed-up .thumb-wrapper img {
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
+  -webkit-filter: grayscale(0%);
+  opacity: 1.0;
+}
+
+
+.bountysource-thumbs-github-indent-header #partial-discussion-header { margin-left: 65px; }

@@ -1,11 +1,17 @@
-Recent issues:
-<ul>
-  <li>#1</li>
-  <li>#2</li>
-</ul>
 
-Recent searches:
-<ul>
-  <li>angular</li>
-  <li>bootstrap</li>
-</ul>
+<style>
+  body { width:600px }
+</style>
+
+<table class="table table-condensed table-hover">
+  <tr>
+    <th>Issue</th>
+    <th style="text-align: center">$</th>
+    <th style="text-align: center"><span class="glyphicon glyphicon-thumbs-up"></span></th>
+  </tr>
+  <tr ng-repeat="issue in thumbed_issues">
+    <td><a ng-href="https://www.bountysource.com/issues/{{issue.slug}}" target="_blank">{{issue.title}}</a></td>
+    <td style="text-align: center"><span ng-show="issue.bounty_total > 0"><span class="label label-success">{{issue.bounty_total | dollars}}</span></span></td>
+    <td style="text-align: center"><span class="label label-warning"><span class="glyphicon glyphicon-thumbs-up"></span> {{issue.thumbs_up_count}}</span></td>
+  </tr>
+</table>
