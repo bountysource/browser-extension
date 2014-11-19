@@ -112,6 +112,7 @@ ThumbBox.prototype.setResponse = function(response) {
 
 ThumbBox.prototype.thumbClicked = function() {
   if (this.api_response && this.api_response.issue_id) {
+    this.setInfoBox('spinner');
     Bountysource.api({
       method: 'POST',
       path: '/thumbs',
