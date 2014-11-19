@@ -1,4 +1,5 @@
 {
+  "version": "0.0.2",
   "content_scripts": [
     {
       "matches": ["*://*/*"],
@@ -15,8 +16,7 @@
   },
   "manifest_version": 2,
   "name": "Bountysource",
-  "permissions": [ "cookies", "https://www.bountysource.com/*", "https://localhost/*" ],
-  "version": "0.0.1",
+  "permissions": [ "cookies", "https://www.bountysource.com/*" ],
   "web_accessible_resources": [
     "images/thumbsup-20.png",
     "images/thumbsup-32.png",
@@ -24,9 +24,5 @@
   ],
   "background": {
     "scripts": ["javascripts/bountysource.js","javascripts/background.js"]
-  },
-  "browser_action": {
-    "default_icon": "images/thumbsup-32.png",
-    "default_popup": "popup/layout.html"
   }
 }

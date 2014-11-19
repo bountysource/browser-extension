@@ -2,6 +2,16 @@ var Background = {
 
   initialize: function() {
     Background.registerAccessTokenListener();
+    Background.openTabAfterInstall();
+  },
+
+  openTabAfterInstall: function() {
+    if (!window.localStorage.getItem('hasSeenIntro')) {
+      window.localStorage.setItem('hasSeenIntro', 'yep');
+      chrome.tabs.create({
+        url: Bountysource.www_base + '/extension'
+      });
+    }
   },
 
   registerAccessTokenListener: function() {

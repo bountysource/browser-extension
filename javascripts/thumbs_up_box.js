@@ -141,8 +141,13 @@ ThumbBox.prototype.thumbClicked = function() {
 
 /* hook into the page DOM */
 (function() {
+
+  // Bountysource
+  if (document.location.href.indexOf(Bountysource.www_base)===0) {
+    document.body.classList.add('bountysource-thumbs-extension-is-installed');
+
   // Github (single page app so use fancy timers)
-  if (document.location.href.match(/^https:\/\/github\.com\//)) {
+  } else if (document.location.href.match(/^https:\/\/github\.com\//)) {
     document.body.classList.add('bountysource-thumbs-github');
 
     var previousGithubPath = null;
@@ -186,24 +191,53 @@ ThumbBox.prototype.thumbClicked = function() {
 
     // Launchpad
   } else if (document.location.href.match(/^https:\/\/bugs\.launchpad\.net\/[^?]+\/\+bug\/\d+$/)) {
+    document.body.classList.add('bountysource-thumbs-launchpad');
     var box = new ThumbBox({ impression: 'show' });
     var header = document.querySelector('.context-publication');
     header.parentNode.insertBefore(box.container, header);
-    header.style.marginLeft = '60px';
     ThumbBox.loadAllData([box]);
-    document.body.classList.add('bountysource-thumbs-launchpad');
 
-    // Bugzilla
+
+    // Bugzilla Issue Show
   } else if (document.location.href.match(/^https?:\/\/[^?]*\/show_bug\.cgi/)) {
-    var box = new ThumbBox({ impression: 'show' });
+    document.body.classList.add('bountysource-thumbs-bugzilla');
+
+        var box = new ThumbBox({ impression: 'show' });
     var header = document.querySelector('.bz_alias_short_desc_container,.page-header');
     header.parentNode.insertBefore(box.container, header);
-    header.style.marginLeft = '60px';
     if (['bugzilla.gnome.org','bugzilla.mozilla.org'].indexOf(document.location.host) >= 0) {
-      header.style.marginBottom = '36px';
+      document.body.classList.add('bountysource-thumbs-bugzilla-big-header');
     }
     ThumbBox.loadAllData([box]);
+
+  // Bugzilla Issue List
+  } else if (document.location.href.match(/^https?:\/\/[^?]*\/buglist\.cgi/)) {
     document.body.classList.add('bountysource-thumbs-bugzilla');
+
+    var headers = document.querySelectorAll('tr.bz_buglist_header');
+    for (var j=0; j < headers.length; j++) {
+      var th = document.createElement('th');
+      th.appendChild(document.createTextNode('+1'));
+      headers[j].insertBefore(th, headers[j].firstChild);
+    }
+
+    var boxes = [];
+    var trs = document.querySelectorAll('tr.bz_bugitem');
+    for (var i=0; i < trs.length; i++) {
+      var td = document.createElement('td');
+      trs[i].insertBefore(td, trs[i].firstChild);
+
+      // limit to first 500 issues
+      if (i < 500) {
+        var link = trs[i].getElementsByTagName('a')[0];
+        var box = new ThumbBox({ issue_url: link.href, size: 'small', impression: 'index' });
+        boxes.push(box);
+        td.appendChild(box.container);
+      }
+    }
+    ThumbBox.loadAllData(boxes);
+
+
 
     // Jira (not working with https://jira.reactos.org/browse/CORE-2853)
     // } else if (document.querySelector('meta[name="application-name"][content="JIRA"]')) {

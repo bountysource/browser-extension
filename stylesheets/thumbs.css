@@ -5,11 +5,12 @@
 .bountysource-thumbs-box .info-wrapper { background: white; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; border-left: 1px solid #ccc; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; height: 20px; text-align: center; overflow: hidden; color: #333; font-size: 17px; line-height: 20px; font-family: Helvetica, arial, freesans, clean, sans-serif; white-space: nowrap; }
 .bountysource-thumbs-box .info-wrapper img { padding-top: 4px; }
 
-.bountysource-thumbs-box-mini { float: left; white-space: nowrap; height: 20px; line-height: 0; }
+.bountysource-thumbs-box-mini { float: left; white-space: nowrap; height: 20px; line-height: 0;  }
 .bountysource-thumbs-box-mini .thumb-wrapper { display: inline-block; padding: 0 2px; cursor: pointer; background-image: linear-gradient(#fcfcfc, #eee); }
 .bountysource-thumbs-box-mini .thumb-wrapper img { width: 20px; height: 20px; }
 .bountysource-thumbs-box-mini .thumb-wrapper:hover { background-image: linear-gradient(#ececec, #ddd); }
-.bountysource-thumbs-box-mini .info-wrapper { display: inline-block; padding: 0 3px; color: #333; font-size: 13px; font-family: Helvetica, arial, freesans, clean, sans-serif; line-height: 21px; height: 22px; overflow: hidden; vertical-align: top; }
+.bountysource-thumbs-box-mini .info-wrapper { display: inline-block; padding: 0 3px; color: #333; font-size: 13px; font-family: Helvetica, arial, freesans, clean, sans-serif; line-height: 21px; height: 20px; overflow: hidden; vertical-align: top; box-sizing: content-box; }
+.bountysource-thumbs-box-mini .info-wrapper img { padding-top: 4px; }
 
 .bountysource-thumbs-box-mini .thumb-wrapper, .bountysource-thumbs-box-mini .info-wrapper { border-color: #ccc; border-style: solid; }
 .bountysource-thumbs-box-mini .thumb-wrapper:hover { border-color: #bbb; }
@@ -35,6 +36,13 @@
   opacity: 1.0;
 }
 
+
 .bountysource-thumbs-github.vis-public #partial-discussion-header { margin-left: 65px; }
 .bountysource-thumbs-github.vis-public .issue-meta { margin-top: 5px; }
 .bountysource-thumbs-github.vis-public .issue-meta .bountysource-thumbs-box-mini { margin-right: 5px; margin-top: -4px; }
+
+.bountysource-thumbs-bugzilla .bz_alias_short_desc_container, .bountysource-thumbs-bugzilla .page-header { margin-left: 60px; }
+.bountysource-thumbs-bugzilla td.first-child { padding-left: 0; }
+.bountysource-thumbs-bugzilla-big-header .bz_alias_short_desc_container, .bountysource-thumbs-bugzilla-big-header .page-header { margin-bottom: 36px; }
+
+.bountysource-thumbs-launchpad .context-publication { margin-left: 60px; }

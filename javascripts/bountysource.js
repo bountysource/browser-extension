@@ -1,7 +1,7 @@
 var Bountysource = {
-  // api_base: 'https://localhost',
-  // www_base: 'https://localhost',
-  // remove localhost from manifest.json
+  // api_base: 'https://local.bountysource.com',
+  // www_base: 'https://local.bountysource.com',
+  // NOTE: add/remove to manifest.json cookie permissions: , "https://local.bountysource.com/*"
   api_base: 'https://api.bountysource.com',
   www_base: 'https://www.bountysource.com',
 
