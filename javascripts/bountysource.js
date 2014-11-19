@@ -1,9 +1,9 @@
 var Bountysource = {
-  api_base: 'https://localhost',
-  www_base: 'https://localhost',
+  // api_base: 'https://localhost',
+  // www_base: 'https://localhost',
   // remove localhost from manifest.json
-  //api_base: 'https://api.bountysource.com',
-  //www_base: 'https://www.bountysource.com',
+  api_base: 'https://api.bountysource.com',
+  www_base: 'https://www.bountysource.com',
 
   api: function(options) {
     chrome.runtime.sendMessage({ action: "get_access_token" }, function(access_token_response) {
@@ -23,7 +23,13 @@ var Bountysource = {
       if (access_token_response.access_token) {
         xhr.setRequestHeader('Authorization', 'token ' + access_token_response.access_token);
       }
-      xhr.send();
+      if (options.body) {
+        var body = JSON.stringify(options.body);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(body);
+      } else {
+        xhr.send();
+      }
     });
   }
 };

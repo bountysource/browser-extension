@@ -1,6 +1,7 @@
 var ThumbBox = function(options) {
   options = options || {};
   this.issue_url = options.issue_url || document.location.href;
+  this.impression = options.impression;
   if (options.size === 'small') {
     this.container_class = 'bountysource-thumbs-box-mini';
     this.image_path = chrome.extension.getURL('images/thumbsup-20.png');
@@ -11,7 +12,63 @@ var ThumbBox = function(options) {
 
   this.createDom();
   this.setInfoBox('spinner');
-  this.getDataFromApi();
+};
+
+ThumbBox.loadAllData = function(instances, attempts) {
+  var urls = [];
+  for (var i=0; i < instances.length; i++) {
+    urls.push(instances[i].issue_url);
+  }
+
+  attempts = (attempts || 0) + 1;
+  Bountysource.api({
+    method: 'POST',
+    path: '/thumbs/index',
+    body: {
+      urls: urls,
+      is_retry: (attempts > 1),
+      impression: instances[0].impression
+    },
+    success: function(response) {
+      if (response.length !== instances.length) {
+        console.log("ERROR4, unexpected response", instances.length, response.length);
+        for (var i=0; i < instances.length; i++) {
+          instances[i].setInfoBox('ERR4');
+        }
+      } else {
+        var retry_instances = [];
+
+        for (var i=0; i < response.length; i++) {
+          if (response[i].issue_id) {
+            instances[i].setResponse(response[i]);
+          } else if (response[i].retry) {
+            retry_instances.push(instances[i]);
+          } else {
+            console.log("ERROR1", response[i]);
+            instances[i].setInfoBox('ERR1');
+          }
+        }
+
+        if ((retry_instances.length > 0)) {
+          if (attempts < 8) {
+            console.log("RETRYING", attempts, retry_instances.length, parseInt(Math.pow(1.5, attempts-1) * 1000));
+            setTimeout(ThumbBox.loadAllData.bind(null, retry_instances, attempts), parseInt(Math.pow(1.5, attempts-1) * 1000));
+          } else {
+            console.log("ERROR2: too many retries");
+            for (var j=0; j < retry_instances.length; j++) {
+              retry_instances[j].setInfoBox('ERR2');
+            }
+          }
+        }
+      }
+    },
+    error: function(response) {
+      console.log("ERROR3", response);
+      for (var i=0; i < instances.length; i++) {
+        instances[i].setInfoBox('ERR3');
+      }
+    }
+  });
 };
 
 ThumbBox.prototype.createDom = function() {
@@ -43,58 +100,38 @@ ThumbBox.prototype.setInfoBox = function(text) {
   }
 };
 
+ThumbBox.prototype.setResponse = function(response) {
+  this.api_response = response;
+  this.setInfoBox(response.thumbs_up_count);
+  this.container.className = this.container_class + (response.has_thumbed_up ? ' has-thumbed-up' : '');
+};
+
 ThumbBox.prototype.thumbClicked = function() {
   if (this.api_response && this.api_response.issue_id) {
     Bountysource.api({
       method: 'POST',
-      path: '/thumbs?issue_id=' + encodeURIComponent(this.api_response.issue_id) + '&downvote=' + !!this.api_response.has_thumbed_up,
-      success: this.getDataFromApiSuccess.bind(this),
-      error: this.getDataFromApiError.bind(this)
+      path: '/thumbs',
+      body: {
+        issue_id: this.api_response.issue_id,
+        downvote: !!this.api_response.has_thumbed_up
+      },
+      success: function(response) {
+        if (response.redirect_to) {
+          document.location.href = response.redirect_to;
+        } else if (response.issue_id) {
+          this.setResponse(response);
+        } else {
+          console.log("ERROR6", response);
+          this.setInfoBox('ERR6');
+        }
+      }.bind(this),
+      error: function(response) {
+        console.log("ERROR5", response);
+        this.setInfoBox('ERR5');
+      }.bind(this)
     });
   }
 };
-
-ThumbBox.prototype.getDataFromApi = function(attempts) {
-  attempts = (attempts || 0) + 1;
-  Bountysource.api({
-    method: 'GET',
-    path: '/thumbs?url=' + encodeURIComponent(this.issue_url) + (attempts > 1 ? '&is_retry=true' : ''),
-    success: function(response) {
-      // decaying retries at second: 1, 2, 4, 8, 16, 32 (max 7 requests over 64 seconds)
-      if (response.retry) {
-        if (attempts < 7) {
-          setTimeout(this.getDataFromApi.bind(this, attempts), Math.pow(2, attempts-1) * 1000);
-          console.log("Thumbs: Retry #" + attempts);
-        } else {
-          this.setInfoBox('ERR1');
-          console.log("Thumbs: ERR1 Max attempts reached");
-        }
-      } else {
-        this.getDataFromApiSuccess(response);
-      }
-    }.bind(this),
-    error: this.getDataFromApiError.bind(this)
-  });
-};
-
-ThumbBox.prototype.getDataFromApiSuccess = function(response) {
-  if (response.issue_id) {
-    this.api_response = response;
-    this.setInfoBox(response.thumbs_up_count);
-    this.container.className = this.container_class + (response.has_thumbed_up ? ' has-thumbed-up' : '');
-  } else if (response.redirect_to) {
-    document.location.href = response.redirect_to;
-  } else {
-    this.setInfoBox('ERR2');
-    console.log("Thumbs: ERR2", response);
-  }
-};
-
-ThumbBox.prototype.getDataFromApiError = function(response) {
-  this.setInfoBox('ERR3');
-  console.log("Thumbs: ERR3", response);
-};
-
 
 
 /* hook into the page DOM */
@@ -103,8 +140,9 @@ ThumbBox.prototype.getDataFromApiError = function(response) {
   if (document.location.href.match(/^https:\/\/github\.com\//)) {
     var previousGithubPath = null;
     var checkGithubUrlForChange = function() {
-      if ((document.location.pathname !== previousGithubPath) && !document.querySelector('.is-context-loading')) {
-        previousGithubPath = document.location.pathname;
+      var currentGithubPath = document.location.pathname + document.location.search;
+      if ((currentGithubPath !== previousGithubPath) && !document.querySelector('.is-context-loading')) {
+        previousGithubPath = currentGithubPath;
 
         if (previousGithubPath.match(/^\/[^/]+\/[^/]+\/(issues|pull)\/\d+/) && !document.querySelector('.repo-private-label')) {
           var header = document.querySelector('#show_issue,.view-pull-request');
@@ -113,17 +151,29 @@ ThumbBox.prototype.getDataFromApiError = function(response) {
             header.className = header.className + ' bountysource-thumbs-github-indent-header';
           }
 
-          if (!header.querySelector('.'+this.container_class)) {
-            header.insertBefore((new ThumbBox()).container, header.firstChild);
+          if (!header.querySelector('.bountysource-thumbs-box')) {
+            var box = new ThumbBox({ impression: 'show' });
+            header.insertBefore(box.container, header.firstChild);
+            ThumbBox.loadAllData([box]);
           }
         } else if (previousGithubPath.match(/^\/[^/]+\/[^/]+\/(issues|pulls)/) && !document.querySelector('.repo-private-label')) {
           var issues = document.querySelectorAll('.issue-title');
+          var boxes = [];
 
           for (var i=0; i < issues.length; i++) {
             var issue_url = issues[i].getElementsByTagName('a')[0].href;
             var meta = issues[i].querySelector('.issue-meta');
-            meta.insertBefore((new ThumbBox({ issue_url: issue_url, size: 'small' })).container, meta.firstChild);
+
+            var old_box = issues[i].querySelector('.bountysource-thumbs-box-mini');
+            if (old_box) {
+              old_box.parentNode.removeChild(old_box);
+            }
+            var new_box = new ThumbBox({ issue_url: issue_url, size: 'small', impression: 'index' });
+            boxes.push(new_box);
+            new_box.container.style.marginRight = '3px';
+            meta.insertBefore(new_box.container, meta.firstChild);
           }
+          ThumbBox.loadAllData(boxes);
         }
 
       }
@@ -134,19 +184,22 @@ ThumbBox.prototype.getDataFromApiError = function(response) {
 
     // Launchpad
   } else if (document.location.href.match(/^https:\/\/bugs\.launchpad\.net\/[^?]+\/\+bug\/\d+$/)) {
+    var box = new ThumbBox({ impression: 'show' });
     var header = document.querySelector('.context-publication');
-    header.parentNode.insertBefore((new ThumbBox()).container, header);
+    header.parentNode.insertBefore(box.container, header);
     header.style.marginLeft = '60px';
-
+    ThumbBox.loadAllData([box]);
 
     // Bugzilla
   } else if (document.location.href.match(/^https?:\/\/[^?]*\/show_bug\.cgi/)) {
+    var box = new ThumbBox({ impression: 'show' });
     var header = document.querySelector('.bz_alias_short_desc_container,.page-header');
-    header.parentNode.insertBefore((new ThumbBox()).container, header);
+    header.parentNode.insertBefore(box.container, header);
     header.style.marginLeft = '60px';
     if (['bugzilla.gnome.org','bugzilla.mozilla.org'].indexOf(document.location.host) >= 0) {
       header.style.marginBottom = '36px';
     }
+    ThumbBox.loadAllData([box]);
 
     // Jira (not working with https://jira.reactos.org/browse/CORE-2853)
     // } else if (document.querySelector('meta[name="application-name"][content="JIRA"]')) {
