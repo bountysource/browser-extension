@@ -1,5 +1,5 @@
 {
-  "version": "0.0.2",
+  "version": "0.0.3",
   "content_scripts": [
     {
       "matches": ["*://*/*"],
@@ -16,7 +16,7 @@
   },
   "manifest_version": 2,
   "name": "Bountysource",
-  "permissions": [ "cookies", "https://www.bountysource.com/*" ],
+  "permissions": [ "tabs", "cookies", "https://www.bountysource.com/*" ],
   "web_accessible_resources": [
     "images/thumbsup-20.png",
     "images/thumbsup-32.png",

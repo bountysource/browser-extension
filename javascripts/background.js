@@ -6,12 +6,23 @@ var Background = {
   },
 
   openTabAfterInstall: function() {
-    if (!window.localStorage.getItem('hasSeenIntro')) {
-      window.localStorage.setItem('hasSeenIntro', 'yep');
-      chrome.tabs.create({
-        url: Bountysource.www_base + '/extension'
-      });
-    }
+    chrome.runtime.onInstalled.addListener(function(details){
+      if (details.reason === "install") {
+        chrome.tabs.query({
+          active: true,
+          lastFocusedWindow: true
+        }, function(tabs) {
+          if (tabs[0].url !== (Bountysource.www_base + '/extension')) {
+            chrome.tabs.create({
+              url: Bountysource.www_base + '/extension'
+            });
+          }
+        });
+      } else if(details.reason === "update") {
+        var thisVersion = chrome.runtime.getManifest().version;
+        console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
+      }
+    });
   },
 
   registerAccessTokenListener: function() {
