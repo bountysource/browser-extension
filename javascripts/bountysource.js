@@ -6,7 +6,7 @@ var Bountysource = {
   www_base: 'https://www.bountysource.com',
 
   api: function(options) {
-    chrome.runtime.sendMessage({ action: "get_access_token" }, function(access_token_response) {
+    Bountysource.getAccessToken(function(access_token_response) {
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
@@ -31,5 +31,9 @@ var Bountysource = {
         xhr.send();
       }
     });
+  },
+
+  getAccessToken: function(callback) {
+    chrome.runtime.sendMessage({ action: "get_access_token" }, callback);
   }
 };
