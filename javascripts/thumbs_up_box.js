@@ -73,10 +73,10 @@ ThumbBox.loadAllData = function(instances, attempts) {
 
 ThumbBox.prototype.createDom = function() {
   this.container = document.createElement('div');
-  this.container.className = this.container_class;
+  this.container.classList.add(this.container_class);
 
   this.thumb_wrapper = document.createElement('div');
-  this.thumb_wrapper.className = 'thumb-wrapper';
+  this.thumb_wrapper.classList.add('thumb-wrapper');
   this.thumb_wrapper.addEventListener('click', this.thumbClicked.bind(this));
   this.container.appendChild(this.thumb_wrapper);
 
@@ -85,7 +85,7 @@ ThumbBox.prototype.createDom = function() {
   this.thumb_wrapper.appendChild(this.thumb_image);
 
   this.info_wrapper = document.createElement('div');
-  this.info_wrapper.className = 'info-wrapper';
+  this.info_wrapper.classList.add('info-wrapper');
   this.container.appendChild(this.info_wrapper);
 };
 
@@ -103,7 +103,11 @@ ThumbBox.prototype.setInfoBox = function(text) {
 ThumbBox.prototype.setResponse = function(response) {
   this.api_response = response;
   this.setInfoBox(response.thumbs_up_count);
-  this.container.className = this.container_class + (response.has_thumbed_up ? ' has-thumbed-up' : '');
+  if (response.has_thumbed_up) {
+    this.container.classList.add('has-thumbed-up');
+  } else {
+    this.container.classList.remove('has-thumbed-up');
+  }
 };
 
 ThumbBox.prototype.thumbClicked = function() {
@@ -138,25 +142,23 @@ ThumbBox.prototype.thumbClicked = function() {
 (function() {
   // Github (single page app so use fancy timers)
   if (document.location.href.match(/^https:\/\/github\.com\//)) {
+    document.body.classList.add('bountysource-thumbs-github');
+
     var previousGithubPath = null;
     var checkGithubUrlForChange = function() {
       var currentGithubPath = document.location.pathname + document.location.search;
       if ((currentGithubPath !== previousGithubPath) && !document.querySelector('.is-context-loading')) {
         previousGithubPath = currentGithubPath;
 
-        if (previousGithubPath.match(/^\/[^/]+\/[^/]+\/(issues|pull)\/\d+/) && !document.querySelector('.repo-private-label')) {
+        if (previousGithubPath.match(/^\/[^/]+\/[^/]+\/(issues|pull)\/\d+/) && document.body.classList.contains('vis-public')) {
           var header = document.querySelector('#show_issue,.view-pull-request');
-
-          if (header.className.indexOf('bountysource-thumbs-github-indent-header') === -1) {
-            header.className = header.className + ' bountysource-thumbs-github-indent-header';
-          }
 
           if (!header.querySelector('.bountysource-thumbs-box')) {
             var box = new ThumbBox({ impression: 'show' });
             header.insertBefore(box.container, header.firstChild);
             ThumbBox.loadAllData([box]);
           }
-        } else if (previousGithubPath.match(/^\/[^/]+\/[^/]+\/(issues|pulls)/) && !document.querySelector('.repo-private-label')) {
+        } else if (previousGithubPath.match(/^\/[^/]+\/[^/]+\/(issues|pulls)/) && document.body.classList.contains('vis-public')) {
           var issues = document.querySelectorAll('.issue-title');
           var boxes = [];
 
@@ -170,7 +172,6 @@ ThumbBox.prototype.thumbClicked = function() {
             }
             var new_box = new ThumbBox({ issue_url: issue_url, size: 'small', impression: 'index' });
             boxes.push(new_box);
-            new_box.container.style.marginRight = '3px';
             meta.insertBefore(new_box.container, meta.firstChild);
           }
           ThumbBox.loadAllData(boxes);
@@ -189,6 +190,7 @@ ThumbBox.prototype.thumbClicked = function() {
     header.parentNode.insertBefore(box.container, header);
     header.style.marginLeft = '60px';
     ThumbBox.loadAllData([box]);
+    document.body.classList.add('bountysource-thumbs-launchpad');
 
     // Bugzilla
   } else if (document.location.href.match(/^https?:\/\/[^?]*\/show_bug\.cgi/)) {
@@ -200,6 +202,7 @@ ThumbBox.prototype.thumbClicked = function() {
       header.style.marginBottom = '36px';
     }
     ThumbBox.loadAllData([box]);
+    document.body.classList.add('bountysource-thumbs-bugzilla');
 
     // Jira (not working with https://jira.reactos.org/browse/CORE-2853)
     // } else if (document.querySelector('meta[name="application-name"][content="JIRA"]')) {
