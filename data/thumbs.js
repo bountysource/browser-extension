@@ -160,7 +160,7 @@
 
 
   // Bountysource
-  if (document.location.host.match(/bountysource\.com$/)===0) {
+  if (document.location.host.match(/\.bountysource\.com$/)) {
     document.body.classList.add('bountysource-thumbs-extension-is-installed');
 
   // Github (single page app so use fancy timers)
