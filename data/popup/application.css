@@ -13,8 +13,8 @@ body { overflow-x: hidden; width: 400px; }
 
 
 .bountysource-navbar { background: #f8f8f8; border-top: 4px solid #129e5e; border-bottom: 1px solid #e7e7e7; height: 44px; position: relative; }
-.bountysource-navbar .logo { position: absolute; top: 5px; left: 5px }
+.bountysource-navbar .logo { position: absolute; top: 5px; left: 10px }
 .bountysource-navbar .logo img { width: 100px; height: 30px; }
 .bountysource-navbar .bountysource-search { position: absolute; width: 63px; top: 4px; left: 120px; }
-.bountysource-navbar .person-info { position: absolute; right: 5px; top: 8px }
+.bountysource-navbar .person-info { position: absolute; right: 10px; top: 8px }
 .bountysource-navbar .person-info a { text-decoration: none; color: #777; }
