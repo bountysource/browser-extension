@@ -3,7 +3,7 @@
   "id": "@bountysource",
   "title": "Bountysource",
   "description": "Bountysource Browser Extension",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Bountysource Inc.",
   "main": "./lib/firefox.js",
   "license": "None"
