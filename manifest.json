@@ -3,7 +3,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["data/thumbs.js"],
+      "js": ["data/bountysource_client.js", "data/thumbs.js"],
       "css": ["data/stylesheets/thumbs.css"],
       "run_at": "document_end"
     }
@@ -23,6 +23,10 @@
     "data/images/spinner.gif"
   ],
   "background": {
-    "scripts": ["lib/chrome.js"]
+    "scripts": ["lib/bountysource_server.js", "lib/chrome.js"]
+  },
+  "browser_action": {
+    "default_icon": "data/images/thumbsup-32.png",
+    "default_popup": "data/popup/layout.html"
   }
 }
