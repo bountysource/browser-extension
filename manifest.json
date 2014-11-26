@@ -1,28 +1,28 @@
 {
-  "version": "0.0.3",
+  "version": "0.0.4",
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["javascripts/bountysource.js", "javascripts/thumbs_up_box.js"],
-      "css": ["stylesheets/thumbs.css"],
+      "js": ["data/thumbs.js"],
+      "css": ["data/stylesheets/thumbs.css"],
       "run_at": "document_end"
     }
   ],
-  "description": "View Bountysource bounties directly from your bug tracker",
+  "description": "Bountysource Browser Extension",
   "icons": {
-    "16": "images/bountysource-16.png",
-    "48": "images/bountysource-48.png",
-    "128": "images/bountysource-128.png"
+    "16": "data/images/bountysource-16.png",
+    "48": "data/images/bountysource-48.png",
+    "128": "data/images/bountysource-128.png"
   },
   "manifest_version": 2,
   "name": "Bountysource",
   "permissions": [ "tabs", "cookies", "https://www.bountysource.com/*" ],
   "web_accessible_resources": [
-    "images/thumbsup-20.png",
-    "images/thumbsup-32.png",
-    "images/spinner.gif"
+    "data/images/thumbsup-20.png",
+    "data/images/thumbsup-32.png",
+    "data/images/spinner.gif"
   ],
   "background": {
-    "scripts": ["javascripts/bountysource.js","javascripts/background.js"]
+    "scripts": ["lib/chrome.js"]
   }
 }

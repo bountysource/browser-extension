@@ -1,0 +1,10 @@
+{
+  "name": "bountysource",
+  "id": "@bountysource",
+  "title": "Bountysource",
+  "description": "Bountysource Browser Extension",
+  "version": "0.0.4",
+  "author": "Bountysource Inc.",
+  "main": "./lib/firefox.js",
+  "license": "None"
+}
