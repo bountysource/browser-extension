@@ -1,0 +1,33 @@
+<div class="bountysource-navbar">
+  <form class="bountysource-search" action="https://www.bountysource.com/search" method="get" target="_blank">
+    <input type="text" name="query" class="form-control input-sm" placeholder="Search" />
+  </form>
+
+  <a href="https://www.bountysource.com/" target="_blank" class="logo">
+    <img ng-src="{{img_src_logo}}"/>
+  </a>
+
+  <span class="person-info" ng-show="current_person.id">
+    <a href="#">
+      <img class="img-rounded" ng-src="{{current_person.image_url_small}}" style="height: 20px; width: 20px;" />
+      {{current_person.display_name}}
+    </a>
+  </span>
+</div>
+
+<ul class="nav nav-tabs nav-condensed" style="margin:10px 0">
+  <li class="active" style="margin-left:10px"><a href="#">My Thumbs</a></li>
+  <!-- <li><a href="#">Settings</a></li> -->
+</ul>
+
+<table class="table table-hover table-no-border-top" ng-show="thumbed_issues.length > 0">
+  <tr ng-repeat="issue in thumbed_issues">
+    <td style="width: 100%">
+      <a ng-href="https://www.bountysource.com/teams/{{issue.team.slug}}" target="_blank"><img ng-src="{{issue.team.image_url_small}}" style="width:16px; height:16px; border-radius: 2px; margin-right: 3px">{{issue.team.name}}</a>
+      &raquo;
+      <a ng-href="https://www.bountysource.com/issues/{{issue.slug}}" target="_blank">{{issue.title}}</a>
+      <span ng-show="issue.bounty_total > 0"><span class="label label-success">{{issue.bounty_total | dollars}}</span></span>
+    </td>
+    <td><div class="bountysource-thumbs-box-mini has-thumbed-up"><div class="thumb-wrapper"><img ng-src="{{img_src_thumbs20}}"></div><div class="info-wrapper">{{issue.thumbs_up_count}}</div></div></td>
+  </tr>
+</table>

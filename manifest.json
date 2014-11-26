@@ -20,7 +20,8 @@
   "web_accessible_resources": [
     "data/images/thumbsup-20.png",
     "data/images/thumbsup-32.png",
-    "data/images/spinner.gif"
+    "data/images/spinner.gif",
+    "data/images/Bountysource-green.png"
   ],
   "background": {
     "scripts": ["lib/bountysource_server.js", "lib/chrome.js"]

@@ -1,0 +1,20 @@
+body { overflow-x: hidden; width: 400px; }
+
+.typeahead-results { margin-top: 0; }
+.typeahead-results td { cursor: pointer; }
+.typeahead-highlighted-row td { background: #428bca; color: white; }
+
+.table-no-border td, .table-no-border th, .table.table-no-border-top tr:first-of-type td, .table.table-no-border-top tr:first-of-type th {
+  border: 0 !important;
+  background-color: transparent !important;
+}
+
+.nav-condensed > li > a { padding: 5px 9px }
+
+
+.bountysource-navbar { background: #f8f8f8; border-top: 4px solid #129e5e; border-bottom: 1px solid #e7e7e7; height: 44px; position: relative; }
+.bountysource-navbar .logo { position: absolute; top: 5px; left: 5px }
+.bountysource-navbar .logo img { width: 100px; height: 30px; }
+.bountysource-navbar .bountysource-search { position: absolute; width: 63px; top: 4px; left: 120px; }
+.bountysource-navbar .person-info { position: absolute; right: 5px; top: 8px }
+.bountysource-navbar .person-info a { text-decoration: none; color: #777; }
