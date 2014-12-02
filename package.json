@@ -3,7 +3,7 @@
   "id": "@bountysource",
   "title": "Bountysource",
   "description": "Bountysource Browser Extension",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "Bountysource Inc.",
   "main": "./lib/bountysource_server.js",
   "license": "None"
