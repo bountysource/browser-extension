@@ -10,7 +10,7 @@ body { overflow-x: hidden; width: 400px; }
 }
 
 .nav-condensed > li > a { padding: 5px 9px }
-
+.nav a { outline:0px !important; -webkit-appearance:none; }
 
 .bountysource-navbar { background: #f8f8f8; border-top: 4px solid #129e5e; border-bottom: 1px solid #e7e7e7; height: 44px; position: relative; }
 .bountysource-navbar .logo { position: absolute; top: 5px; left: 10px }

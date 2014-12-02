@@ -7,8 +7,6 @@ angular.module('app').config(function($routeProvider) {
   });
 }).controller('HomeController', function ($scope, $bountysource, $location, $route) {
 
-  $scope.img_src_thumbs20 = $bountysource.imagePath('thumbsup-20.png');
-
   $scope.status = 'loading';
 
   $bountysource.api({

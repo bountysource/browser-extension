@@ -1,8 +1,10 @@
 'use strict';
 
-angular.module('app').controller('LayoutController', function ($rootScope, $bountysource) {
+angular.module('app').controller('LayoutController', function ($rootScope, $bountysource, $window) {
 
-  $rootScope.img_src_logo = $bountysource.imagePath('Bountysource-green.png');
+  $rootScope.tabIsSelected = function(id) {
+    return ($window.document.location.hash === id);
+  };
 
   $bountysource.api({
     path: 'people/me'

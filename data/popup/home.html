@@ -1,8 +1,3 @@
-<ul class="nav nav-tabs nav-condensed" style="margin:10px 0">
-  <li class="active" style="margin-left:10px"><a href="layout.html#/">My Thumbs</a></li>
-  <li><a href="layout.html#/feedback">Feedback</a></li>
-</ul>
-
 <div ng-show="!thumbed_issues" style="padding: 10px 0 20px; text-align: center">
   <span ng-show="status==='loading'">Loading your thumbs... please wait.</span>
   <span ng-show="status==='no_issues' && current_person.id">No issues found.</span>
@@ -22,6 +17,6 @@
       <a ng-href="https://www.bountysource.com/issues/{{issue.slug}}" target="_blank">{{issue.title}}</a>
       <span ng-show="issue.bounty_total > 0"><span class="label label-success">{{issue.bounty_total | dollars}}</span></span>
     </td>
-    <td style="vertical-align: middle; padding: 0 4px"><div class="bountysource-thumbs-box-mini has-thumbed-up"><div class="thumb-wrapper"><img ng-src="{{img_src_thumbs20}}"></div><div class="info-wrapper">{{issue.thumbs_up_count}}</div></div></td>
+    <td style="vertical-align: middle; padding: 0 4px"><div class="bountysource-thumbs-box-mini has-thumbed-up"><div class="thumb-wrapper"><img src="../images/thumbsup-20.png"></div><div class="info-wrapper">{{issue.thumbs_up_count}}</div></div></td>
   </tr>
 </table>
