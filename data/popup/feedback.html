@@ -1,0 +1,24 @@
+<ul class="nav nav-tabs nav-condensed" style="margin:10px 0">
+  <li style="margin-left:10px"><a href="layout.html#/">My Thumbs</a></li>
+  <li class="active"><a href="layout.html#/feedback">Feedback</a></li>
+</ul>
+
+<div style="padding:10px">
+  <form ng-submit="submit_feedback()" ng-hide="feedback_submitted">
+    <div class="form-group" ng-hide="current_person.id">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" ng-model="feedback.email" class="form-control" id="exampleInputEmail1" placeholder="Your email address">
+    </div>
+    <div class="form-group">
+      <label for="feedbackMessage">Message</label>
+      <textarea class="form-control" ng-model="feedback.message" id="feedbackMessage" placeholder="What's on your mind?" rows="5"></textarea>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Send Feedback to Bountysource Team</button>
+    </div>
+  </form>
+
+  <div class="alert alert-success" ng-show="feedback_submitted">
+    Thanks for the feedback!
+  </div>
+</div>

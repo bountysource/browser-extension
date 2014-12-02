@@ -1,31 +1,12 @@
-<div class="bountysource-navbar">
-  <form class="bountysource-search" action="https://www.bountysource.com/search" method="get" target="_blank">
-    <input type="text" name="query" class="form-control input-sm" placeholder="Search" />
-  </form>
-
-  <a href="https://www.bountysource.com/" target="_blank" class="logo">
-    <img ng-src="{{img_src_logo}}"/>
-  </a>
-
-  <span class="person-info">
-    <a ng-show="current_person.id" ng-href="https://www.bountysource.com/people/{{current_person.slug}}" target="_blank">
-      <img class="img-rounded" ng-src="{{current_person.image_url_small}}" style="height: 20px; width: 20px;" />
-      {{current_person.display_name}}
-    </a>
-
-    <a ng-hide="current_person.id" href="https://www.bountysource.com/signin" target="_blank">Sign In</a>
-  </span>
-</div>
-
 <ul class="nav nav-tabs nav-condensed" style="margin:10px 0">
-  <li class="active" style="margin-left:10px"><a href="#">My Thumbs</a></li>
-  <!-- <li><a href="#">Settings</a></li> -->
+  <li class="active" style="margin-left:10px"><a href="layout.html#/">My Thumbs</a></li>
+  <li><a href="layout.html#/feedback">Feedback</a></li>
 </ul>
 
 <div ng-show="!thumbed_issues" style="padding: 10px 0 20px; text-align: center">
   <span ng-show="status==='loading'">Loading your thumbs... please wait.</span>
-  <span ng-show="status==='no_issues'">No issues found.</span>
-  <span ng-show="status==='signin'">Please <a href="https://www.bountysource.com/signin" target="_blank">login or register</a> to see your thumbs.</span>
+  <span ng-show="status==='no_issues' && current_person.id">No issues found.</span>
+  <span ng-show="status==='no_issues' && !current_person.id">Please <a href="https://www.bountysource.com/signin" target="_blank">login or register</a> to see your thumbs.</span>
 </div>
 
 <table class="table table-hover table-no-border-top" ng-show="thumbed_issues.length > 0">

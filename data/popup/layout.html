@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app" ng-csp>
+<html ng-app="app" ng-csp ng-controller="LayoutController">
 <head>
   <title>Bountysource Browser Extension</title>
 
@@ -16,11 +16,32 @@
   <script src="application.js"></script>
   <script src="filters/dollars.js"></script>
   <script src="home.js"></script>
+  <script src="feedback.js"></script>
+  <script src="layout.js"></script>
   <link href="application.css" media="screen" rel="stylesheet" />
   <link href="../stylesheets/thumbs.css" media="screen" rel="stylesheet" />
 
 </head>
 <body>
+  <div class="bountysource-navbar">
+    <form class="bountysource-search" action="https://www.bountysource.com/search" method="get" target="_blank">
+      <input type="text" name="query" class="form-control input-sm" placeholder="Search" />
+    </form>
+
+    <a href="https://www.bountysource.com/" target="_blank" class="logo">
+      <img ng-src="{{img_src_logo}}"/>
+    </a>
+
+    <span class="person-info">
+      <a ng-show="current_person.id" ng-href="https://www.bountysource.com/people/{{current_person.slug}}" target="_blank">
+        <img class="img-rounded" ng-src="{{current_person.image_url_small}}" style="height: 20px; width: 20px;" />
+        {{current_person.display_name}}
+      </a>
+
+      <a ng-hide="current_person.id" href="https://www.bountysource.com/signin" target="_blank">Sign In</a>
+    </span>
+  </div>
+
   <div ng-view></div>
 </body>
 </html>
