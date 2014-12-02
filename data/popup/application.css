@@ -1,4 +1,4 @@
-body { overflow-x: hidden; width: 400px; }
+body { overflow-x: hidden; min-width: 400px; }
 
 .typeahead-results { margin-top: 0; }
 .typeahead-results td { cursor: pointer; }
