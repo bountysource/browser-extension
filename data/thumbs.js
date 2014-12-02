@@ -160,6 +160,7 @@
             var box = new ThumbBox({ impression: 'show' });
             header.insertBefore(box.container, header.firstChild);
             ThumbBox.loadAllData([box]);
+            BountysourceClient.google_analytics({ path: "thumbs/github/show" });
           }
         } else if (previousGithubPath.match(/^\/[^/]+\/[^/]+\/(issues|pulls)/) && document.body.classList.contains('vis-public')) {
           var issues = document.querySelectorAll('.issue-title');
@@ -178,6 +179,7 @@
             meta.insertBefore(new_box.container, meta.firstChild);
           }
           ThumbBox.loadAllData(boxes);
+          BountysourceClient.google_analytics({ path: "thumbs/github/index" });
         }
 
       }
@@ -193,19 +195,20 @@
     var header = document.querySelector('.context-publication');
     header.parentNode.insertBefore(box.container, header);
     ThumbBox.loadAllData([box]);
-
+    BountysourceClient.google_analytics({ path: "thumbs/launchpad/show" });
 
     // Bugzilla Issue Show
   } else if (document.location.href.match(/^https?:\/\/[^?]*\/show_bug\.cgi/)) {
     document.body.classList.add('bountysource-thumbs-bugzilla');
 
-        var box = new ThumbBox({ impression: 'show' });
+    var box = new ThumbBox({ impression: 'show' });
     var header = document.querySelector('.bz_alias_short_desc_container,.page-header');
     header.parentNode.insertBefore(box.container, header);
     if (['bugzilla.gnome.org','bugzilla.mozilla.org'].indexOf(document.location.host) >= 0) {
       document.body.classList.add('bountysource-thumbs-bugzilla-big-header');
     }
     ThumbBox.loadAllData([box]);
+    BountysourceClient.google_analytics({ path: "thumbs/bugzilla/show" });
 
   // Bugzilla Issue List
   } else if (document.location.href.match(/^https?:\/\/[^?]*\/buglist\.cgi/)) {
@@ -233,8 +236,7 @@
       }
     }
     ThumbBox.loadAllData(boxes);
-
-
+    BountysourceClient.google_analytics({ path: "thumbs/bugzilla/index" });
 
     // Jira (not working with https://jira.reactos.org/browse/CORE-2853)
     // } else if (document.querySelector('meta[name="application-name"][content="JIRA"]')) {

@@ -5,6 +5,6 @@
   "description": "Bountysource Browser Extension",
   "version": "0.0.6",
   "author": "Bountysource Inc.",
-  "main": "./lib/firefox.js",
+  "main": "./lib/bountysource_server.js",
   "license": "None"
 }

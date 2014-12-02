@@ -24,7 +24,7 @@
     "data/images/Bountysource-green.png"
   ],
   "background": {
-    "scripts": ["lib/bountysource_server.js", "lib/chrome.js"]
+    "scripts": ["lib/bountysource_server.js"]
   },
   "browser_action": {
     "default_icon": "data/images/thumbsup-32.png",
