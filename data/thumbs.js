@@ -278,7 +278,7 @@
       ThumbBox.loadAllData([box]);
       BountysourceClient.google_analytics({ path: "thumbs/trac/show" });
 
-    } else if (matches = document.querySelectorAll('table.listing.tickets td.ticket, table.listing.tickets td.id')) {
+    } else if ((matches = document.querySelectorAll('table.listing.tickets td.ticket, table.listing.tickets td.id')).length > 0) {
       // issues index
       var header = document.querySelector('table.listing.tickets tr.trac-columns');
       var th = document.createElement('th');
@@ -299,12 +299,48 @@
       BountysourceClient.google_analytics({ path: "thumbs/trac/index" });
     }
 
-
-    // Jira (not working with https://jira.reactos.org/browse/CORE-2853)
-    // } else if (document.querySelector('meta[name="application-name"][content="JIRA"]')) {
-    //   var header = document.querySelector('.aui-page-header-inner,.issue-header-content');
-    //   header.parentNode.insertBefore((new ThumbBox()).container, header);
-    //   header.style.marginLeft = '60px';
-
+  // // Jira
+  // //   TODO: ERR2 (backend doesn't seem to update thubs_up_count or votes_count)
+  // //   TODO: inject thumbs into split-view
+  // } else if (document.querySelector('meta[name="application-name"][content="JIRA"]')) {
+  //   document.body.classList.add('bountysource-thumbs-jira');
+  //
+  //   var previousJiraUrl = null;
+  //   var checkJiraUrlForChange = function() {
+  //     if ((document.location.href !== previousJiraUrl) && (matches = document.querySelector('#issue-content')) && !document.querySelector('#issue-content .bountysource-thumbs-box')) {
+  //       // issue show (also works with split view)
+  //       previousJiraUrl = document.location.href;
+  //
+  //       var link = matches.querySelector('#key-val');
+  //       var box = new ThumbBox({ issue_url: link.href, impression: 'show' });
+  //       matches.insertBefore(box.container, matches.firstChild);
+  //       ThumbBox.loadAllData([box]);
+  //       BountysourceClient.google_analytics({ path: "thumbs/jira/show" });
+  //     } else if ((document.location.href !== previousJiraUrl) && (matches = document.querySelectorAll('#issuetable.navigator-results .issuerow .issuetype')).length > 0) {
+  //       // issue index (non-split view)
+  //       previousJiraUrl = document.location.href;
+  //
+  //       var header = document.querySelector('#issuetable .rowHeader');
+  //       var th = document.createElement('th');
+  //       th.appendChild(document.createTextNode('+1'));
+  //       header.insertBefore(th, header.firstChild);
+  //
+  //       var boxes = [];
+  //       for (var i=0; i < matches.length; i++) {
+  //         var td = document.createElement('td');
+  //         matches[i].parentNode.insertBefore(td, matches[i]);
+  //
+  //         var link = matches[i].getElementsByTagName('a')[0];
+  //         var box = new ThumbBox({ issue_url: link.href, size: 'small', impression: 'index' });
+  //         boxes.push(box);
+  //         td.appendChild(box.container);
+  //       }
+  //       ThumbBox.loadAllData(boxes);
+  //       BountysourceClient.google_analytics({ path: "thumbs/jira/index" });
+  //
+  //     }
+  //     setTimeout(checkJiraUrlForChange, 100);
+  //   };
+  //   checkJiraUrlForChange();
   }
 })();

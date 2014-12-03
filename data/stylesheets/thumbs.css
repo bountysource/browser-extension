@@ -49,3 +49,6 @@
 .bountysource-thumbs-launchpad .bountysource-thumbs-box-mini { margin-right: 10px; }
 
 .bountysource-thumbs-trac #ticket h1, .bountysource-thumbs-trac #ticket h2 { margin-left: 60px; }
+
+.bountysource-thumbs-jira .issue-header .issue-header-content { margin-left: 60px; }
+.bountysource-thumbs-jira .bountysource-thumbs-box { margin-left: 10px; margin-top: 10px; z-index: 1000; }
