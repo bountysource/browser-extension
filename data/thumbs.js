@@ -57,7 +57,7 @@
 
         if ((retry_instances.length > 0)) {
           if (attempts < 8) {
-            console.log("RETRYING", attempts, retry_instances.length, parseInt(Math.pow(1.5, attempts-1) * 1000));
+            //console.log("RETRYING", attempts, retry_instances.length, parseInt(Math.pow(1.5, attempts-1) * 1000));
             setTimeout(ThumbBox.loadAllData.bind(null, retry_instances, attempts), parseInt(Math.pow(1.5, attempts-1) * 1000));
           } else {
             console.log("ERROR2: too many retries");
@@ -181,7 +181,7 @@
         }
 
       }
-      setTimeout(checkGithubUrlForChange, 50);
+      setTimeout(checkGithubUrlForChange, 100);
     };
     checkGithubUrlForChange();
 
@@ -196,24 +196,34 @@
     BountysourceClient.google_analytics({ path: "thumbs/launchpad/show" });
 
   // Launchpad Issue Index
-  } else if (matches = document.location.href.match(/^https:\/\/bugs\.launchpad\.net\//) && document.querySelector('#bugs-table-listing')) {
+  } else if (document.location.href.match(/^https:\/\/bugs\.launchpad\.net\//) && document.querySelector('#bugs-table-listing')) {
     document.body.classList.add('bountysource-thumbs-launchpad');
 
-    var boxes = [];
-    var rows = document.querySelectorAll('.buglisting-row');
-    for (var i=0; i < rows.length; i++) {
-      var target = rows[i].querySelector('.buglisting-col2 .buginfo-extra');
+    // sorting and paginating uses browser-push and requires timers
+    var previousLaunchpadUrl = null;
+    var checkLaunchpadUrlForChange = function() {
+      if ((document.location.href !== previousLaunchpadUrl) && document.querySelector('.yui3-overlay-indicator-hidden')) {
+        previousLaunchpadUrl = document.location.href;
 
-      // limit to first 500 issues
-      if (i < 500) {
-        var link = rows[i].querySelector('.bugtitle');
-        var box = new ThumbBox({ issue_url: link.href, size: 'small', impression: 'index' });
-        boxes.push(box);
-        target.insertBefore(box.container, target.firstChild);
+        var boxes = [];
+        var rows = document.querySelectorAll('.buglisting-row');
+        for (var i=0; i < rows.length; i++) {
+          var target = rows[i].querySelector('.buglisting-col2 .buginfo-extra');
+
+          // limit to first 500 issues
+          if (i < 500) {
+            var link = rows[i].querySelector('.bugtitle');
+            var box = new ThumbBox({ issue_url: link.href, size: 'small', impression: 'index' });
+            boxes.push(box);
+            target.insertBefore(box.container, target.firstChild);
+          }
+        }
+        ThumbBox.loadAllData(boxes);
+        BountysourceClient.google_analytics({ path: "thumbs/launchpad/index" });
       }
-    }
-    ThumbBox.loadAllData(boxes);
-    BountysourceClient.google_analytics({ path: "thumbs/launchpad/index" });
+      setTimeout(checkLaunchpadUrlForChange, 100);
+    };
+    checkLaunchpadUrlForChange();
 
   // Bugzilla Issue Show
   } else if (matches = document.location.href.match(/^https?:\/\/[^?]*\/show_bug\.cgi\?id=\d+/)) {
