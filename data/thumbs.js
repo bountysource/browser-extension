@@ -266,6 +266,40 @@
     ThumbBox.loadAllData(boxes);
     BountysourceClient.google_analytics({ path: "thumbs/bugzilla/index" });
 
+  // Trac
+  } else if (document.querySelector('link[rel="help"][href$="TracGuide"]')) {
+    document.body.classList.add('bountysource-thumbs-trac');
+
+    if (matches = document.querySelector('#ticket.trac-content')) {
+      // issue show
+      var link = matches.querySelector('h2 a');
+      var box = new ThumbBox({ issue_url: link.href, impression: 'show' });
+      matches.insertBefore(box.container, matches.firstChild);
+      ThumbBox.loadAllData([box]);
+      BountysourceClient.google_analytics({ path: "thumbs/trac/show" });
+
+    } else if (matches = document.querySelectorAll('table.listing.tickets td.ticket, table.listing.tickets td.id')) {
+      // issues index
+      var header = document.querySelector('table.listing.tickets tr.trac-columns');
+      var th = document.createElement('th');
+      th.appendChild(document.createTextNode('+1'));
+      header.insertBefore(th, header.firstChild);
+
+      var boxes = [];
+      for (var i=0; i < matches.length; i++) {
+        var td = document.createElement('td');
+        matches[i].parentNode.insertBefore(td, matches[i]);
+
+        var link = matches[i].getElementsByTagName('a')[0];
+        var box = new ThumbBox({ issue_url: link.href, size: 'small', impression: 'index' });
+        boxes.push(box);
+        td.appendChild(box.container);
+      }
+      ThumbBox.loadAllData(boxes);
+      BountysourceClient.google_analytics({ path: "thumbs/trac/index" });
+    }
+
+
     // Jira (not working with https://jira.reactos.org/browse/CORE-2853)
     // } else if (document.querySelector('meta[name="application-name"][content="JIRA"]')) {
     //   var header = document.querySelector('.aui-page-header-inner,.issue-header-content');

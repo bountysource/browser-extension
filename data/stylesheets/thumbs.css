@@ -47,3 +47,5 @@
 
 .bountysource-thumbs-launchpad .context-publication { margin-left: 60px; }
 .bountysource-thumbs-launchpad .bountysource-thumbs-box-mini { margin-right: 10px; }
+
+.bountysource-thumbs-trac #ticket h1, .bountysource-thumbs-trac #ticket h2 { margin-left: 60px; }
