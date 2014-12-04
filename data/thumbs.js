@@ -22,6 +22,10 @@
       urls.push(instances[i].issue_url);
     }
 
+    if (urls.length === 0) {
+      return;
+    }
+
     attempts = (attempts || 0) + 1;
     BountysourceClient.api({
       method: 'POST',
@@ -160,7 +164,7 @@
             ThumbBox.loadAllData([box]);
             BountysourceClient.google_analytics({ path: "thumbs/github/show" });
           }
-        } else if (previousGithubUrl.match(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(?:issues|pulls)/) && document.body.classList.contains('vis-public')) {
+        } else if (previousGithubUrl.match(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(?:issues|pulls|labels|milestones)/) && document.body.classList.contains('vis-public')) {
           var issues = document.querySelectorAll('.issue-title');
           var boxes = [];
 
