@@ -66,7 +66,7 @@
           } else {
             console.log("ERROR2: too many retries");
             for (var j=0; j < retry_instances.length; j++) {
-              retry_instances[j].setInfoBox('ERR2');
+              retry_instances[j].setInfoBox('ERR2', 'https://github.com/bountysource/browser-extension/issues/10');
             }
           }
         }
@@ -92,14 +92,18 @@
     this.container.appendChild(this.info_wrapper);
   };
 
-  ThumbBox.prototype.setInfoBox = function(text) {
+  ThumbBox.prototype.setInfoBox = function(text, url) {
     if (text === 'spinner') {
       var spinner_image = document.createElement('img');
       spinner_image.src = BountysourceClient.imagePath('spinner.gif');
       this.info_wrapper.innerHTML = '';
       this.info_wrapper.appendChild(spinner_image);
     } else {
-      this.info_wrapper.innerHTML = text;
+      if (url) {
+        this.info_wrapper.innerHTML = "<a href='"+url+"' target='_blank'>"+text+"</a>";
+      } else {
+        this.info_wrapper.innerHTML = text;
+      }
     }
   };
 
