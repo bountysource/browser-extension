@@ -38,12 +38,12 @@
       if (!response) {
         console.log("ERROR3", response);
         for (var i=0; i < instances.length; i++) {
-          instances[i].setInfoBox('ERR3');
+          instances[i].setInfoBox('ERR3', 'https://github.com/bountysource/browser-extension/issues/22');
         }
       } else if (response.length !== instances.length) {
         console.log("ERROR4, unexpected response", instances.length, response.length);
         for (var i=0; i < instances.length; i++) {
-          instances[i].setInfoBox('ERR4');
+          instances[i].setInfoBox('ERR4', 'https://github.com/bountysource/browser-extension/issues/22');
         }
       } else {
         var retry_instances = [];
@@ -55,7 +55,7 @@
             retry_instances.push(instances[i]);
           } else {
             console.log("ERROR1", response[i]);
-            instances[i].setInfoBox('ERR1');
+            instances[i].setInfoBox('ERR1', 'https://github.com/bountysource/browser-extension/issues/22');
           }
         }
 
@@ -93,17 +93,21 @@
   };
 
   ThumbBox.prototype.setInfoBox = function(text, url) {
+    while (this.info_wrapper.firstChild) {
+      this.info_wrapper.removeChild(this.info_wrapper.firstChild);
+    }
     if (text === 'spinner') {
       var spinner_image = document.createElement('img');
       spinner_image.src = BountysourceClient.imagePath('spinner.gif');
-      this.info_wrapper.innerHTML = '';
       this.info_wrapper.appendChild(spinner_image);
+    } else if (url) {
+      var link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.appendChild(document.createTextNode(text));
+      this.info_wrapper.appendChild(link);
     } else {
-      if (url) {
-        this.info_wrapper.innerHTML = "<a href='"+url+"' target='_blank'>"+text+"</a>";
-      } else {
-        this.info_wrapper.innerHTML = text;
-      }
+      this.info_wrapper.appendChild(document.createTextNode(text));
     }
   };
 
@@ -130,14 +134,14 @@
       }, function(response) {
         if (!response) {
           console.log("ERROR5", response);
-          this.setInfoBox('ERR5');
+          this.setInfoBox('ERR5', 'https://github.com/bountysource/browser-extension/issues/22');
         } else if (response.redirect_to) {
           document.location.href = response.redirect_to;
         } else if (response.issue_id) {
           this.setResponse(response);
         } else {
           console.log("ERROR6", response);
-          this.setInfoBox('ERR6');
+          this.setInfoBox('ERR6', 'https://github.com/bountysource/browser-extension/issues/22');
         }
       }.bind(this));
     }
