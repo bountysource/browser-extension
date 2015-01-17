@@ -15,8 +15,9 @@ var BountysourceClient = {
   //   required: action (string)
   //   optional: callback (method)
   message: function(options) {
-    var callback = options.callback || (function(){ console.log("Unregistered message callback", arguments); });
+    var callback = (function(){});
     if (options.callback) {
+      callback = options.callback;
       delete options.callback;
     }
     if (BountysourceClient.browser === 'chrome') {
@@ -35,6 +36,9 @@ var BountysourceClient = {
 
   // Record command in google analytics
   google_analytics: function(request) {
-    BountysourceClient.message({ action: "google_analytics", request: request });
+    // if we don't use a timeout, Firefox periodically throws a "callback not found" error
+    setTimeout(function() {
+      BountysourceClient.message({ action: "google_analytics", request: request });
+    }, 0);
   }
 };

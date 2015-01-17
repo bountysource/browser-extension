@@ -9,7 +9,8 @@ body { overflow-x: hidden; min-width: 400px; }
   background-color: transparent !important;
 }
 
-.nav-condensed > li > a { padding: 5px 9px }
+.nav-condensed > li > a { padding: 5px 9px; }
+.nav-condensed li { margin-left:10px; }
 .nav a { outline:0px !important; -webkit-appearance:none; }
 
 .bountysource-navbar { background: #f8f8f8; border-top: 4px solid #129e5e; border-bottom: 1px solid #e7e7e7; height: 44px; position: relative; }
@@ -18,3 +19,13 @@ body { overflow-x: hidden; min-width: 400px; }
 .bountysource-navbar .bountysource-search { position: absolute; width: 63px; top: 4px; left: 120px; }
 .bountysource-navbar .person-info { position: absolute; right: 10px; top: 8px }
 .bountysource-navbar .person-info a { text-decoration: none; color: #777; }
+
+
+.thumbs-message { padding: 10px 0 20px; text-align: center; }
+
+
+#thumbs-table td:nth-child(1) { padding: 4px 0 4px 6px; text-align: center; vertical-align: middle; }
+#thumbs-table td:nth-child(1) img { width: 32px; height: 32px; border-radius: 4px; }
+#thumbs-table td:nth-child(2) { width: 100%; }
+#thumbs-table td:nth-child(2) .label { margin-left: 8px; }
+#thumbs-table td:nth-child(3) { vertical-align: middle; padding: 0 4px; }

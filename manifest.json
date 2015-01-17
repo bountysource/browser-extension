@@ -28,6 +28,6 @@
   },
   "browser_action": {
     "default_icon": "data/images/thumbsup-32.png",
-    "default_popup": "data/popup/layout_chrome.html"
+    "default_popup": "data/popup/application.html"
   }
 }
