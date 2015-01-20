@@ -62,7 +62,7 @@
         if ((retry_instances.length > 0)) {
           if (attempts < 8) {
             //console.log("RETRYING", attempts, retry_instances.length, parseInt(Math.pow(1.5, attempts-1) * 1000));
-            setTimeout(ThumbBox.loadAllData.bind(null, retry_instances, attempts), parseInt(Math.pow(1.5, attempts-1) * 1000));
+            setTimeout(function() { ThumbBox.loadAllData(retry_instances, attempts); }, parseInt(Math.pow(1.5, attempts-1) * 1000));
           } else {
             console.log("ERROR2: too many retries");
             for (var j=0; j < retry_instances.length; j++) {
@@ -193,7 +193,7 @@
         }
 
       }
-      setTimeout(checkGithubUrlForChange, 100);
+      setTimeout(function() { checkGithubUrlForChange(); }, 100);
     };
     checkGithubUrlForChange();
 
@@ -233,7 +233,7 @@
         ThumbBox.loadAllData(boxes);
         BountysourceClient.google_analytics({ path: "thumbs/launchpad/index" });
       }
-      setTimeout(checkLaunchpadUrlForChange, 100);
+      setTimeout(function() { checkLaunchpadUrlForChange(); }, 100);
     };
     checkLaunchpadUrlForChange();
 
@@ -351,7 +351,7 @@
   //       BountysourceClient.google_analytics({ path: "thumbs/jira/index" });
   //
   //     }
-  //     setTimeout(checkJiraUrlForChange, 100);
+  //     setTimeout(function() { checkJiraUrlForChange(); }, 100);
   //   };
   //   checkJiraUrlForChange();
   }
