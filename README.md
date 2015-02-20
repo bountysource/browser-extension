@@ -8,8 +8,8 @@ Features
 -----------
 * View total +1 count on every issue.
 * Add a +1 to issues without a spammy comment.
-* Automatically hide "+1" comments.
-* Supports GitHub, LaunchPad, and Bugzilla trackers
+* Automatically hide "+1" comments. (coming very soon!)
+* Supports GitHub, LaunchPad, Bugzilla, and Trac trackers
 
 Contributing
 -----------
