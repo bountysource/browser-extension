@@ -52,3 +52,5 @@
 
 .bountysource-thumbs-jira .issue-header .issue-header-content { margin-left: 60px; }
 .bountysource-thumbs-jira .bountysource-thumbs-box { margin-left: 10px; margin-top: 10px; z-index: 1000; }
+.bountysource-comment-hide {display: none !important;}
+

@@ -147,6 +147,103 @@
     }
   };
 
+  var ThumbHide = function() {
+    this.hideAllThumbs();
+  };
+
+  ThumbHide.prototype.hideAllThumbs = function() {
+    var that = this;
+    var hideAll = function() {
+      var comments = [].slice.call(document.querySelectorAll(".comment-body"));
+      var commentsHidden = 0;
+      var hideTimelineWrapper = function(node) {
+        while (node = node.parentElement) {
+          if (BountysourceClient.matches.call(node, '.timeline-comment-wrapper')) {
+            node.classList.add('bountysource-comment-hide');
+          }
+        }
+        commentsHidden++;
+      };
+
+      for (var i = 0, cL = comments.length; i < cL; i++) {
+        var comment = comments[i];
+        var trimmedContent = comment.textContent.trim();
+
+        // Search for +1's
+        if (trimmedContent.length && /^\+1$/.test(trimmedContent)) {
+          hideTimelineWrapper(comment);
+        }
+
+        // Search for thumbs up emoji
+        else if(!trimmedContent.length && comment.querySelectorAll("[alt=':+1:']").length) {
+          hideTimelineWrapper(comment);
+        }
+
+        // Show event on timeline
+        if (commentsHidden && i === cL - 1) {
+          that.showEventOnTimeline(commentsHidden);
+        }
+      }
+    };
+
+    var hideThumbCb = function(msg) {
+      if(msg.hideThumbsup)
+        hideAll();
+      else
+        that.showAllThumbs();
+    };
+
+    // Get initial thumb prefs
+    BountysourceClient.message({action: 'get_hide_thumb_pref', callback: hideThumbCb});
+
+    // Listeners for pref change
+    if (BountysourceClient.browser === 'chrome') {
+      chrome.runtime.onMessage.addListener(function(options, sender, sendResponse) {
+        if(typeof options.hideThumbsup !== "undefined") {
+          hideThumbCb(options);
+          return true;
+        }
+      });
+    }
+    else if (BountysourceClient.browser === 'firefox') {
+      self.port.on('hideThumbsup', hideThumbCb);
+    }
+  };
+
+  ThumbHide.prototype.showAllThumbs = function() {
+    var hiddenComments = [].slice.call(document.querySelectorAll('.bountysource-comment-hide'));
+    var btevent = document.querySelector('.bountysource-thumbsup-event');
+
+    for (var i = 0, hL = hiddenComments.length; i < hL; i++) {
+      hiddenComments[i].classList.remove('bountysource-comment-hide');
+    }
+
+    if(btevent) {
+      btevent.parentNode.removeChild(btevent);
+    }
+  };
+
+  ThumbHide.prototype.showEventOnTimeline = function(count) {
+    if (document.querySelector('.bountysource-thumbsup-event')) return;
+
+    var hideThumbEventHTML = '\
+        <div class="discussion-item-header" id="event-218493532">\
+        <span class="octicon octicon-megaphone discussion-item-icon"></span>\
+        <a class="renamed-is">Bountysource</a> hid  <span class="renamed-is">${count}</span> comments containing just <span class="renamed-is">:thumbsup:</span> or <span class="renamed-is">+1</span> \
+      </div>';
+    var firstTimelineComment = document.querySelector(".timeline-comment-wrapper");
+    var discussionEvent = document.createElement('div');
+
+    discussionEvent.className = 'discussion-item bountysource-thumbsup-event';
+    discussionEvent.innerHTML = hideThumbEventHTML.replace('${count}', count);
+
+    if (firstTimelineComment.nextElementSibling) {
+      firstTimelineComment.parentNode.insertBefore(discussionEvent, firstTimelineComment.nextElementSibling);
+    }
+    else {
+      firstTimelineComment.parentNode.appendChild(discussionEvent);
+    }
+  };
 
   var matches;
 
@@ -171,6 +268,10 @@
             header.insertBefore(box.container, header.firstChild);
             ThumbBox.loadAllData([box]);
             BountysourceClient.google_analytics({ path: "thumbs/github/show" });
+          }
+
+          if (!document.querySelector('.bountysource-thumbsup-event')) {
+            new ThumbHide();
           }
         } else if (previousGithubUrl.match(/^https:\/\/github\.com\/[^/]+\/[^/]+\/(?:issues|pulls|labels|milestones)/) && document.body.classList.contains('vis-public')) {
           var issues = document.querySelectorAll('.issue-title');

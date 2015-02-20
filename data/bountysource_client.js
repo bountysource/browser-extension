@@ -40,5 +40,11 @@ var BountysourceClient = {
     setTimeout(function() {
       BountysourceClient.message({ action: "google_analytics", request: request });
     }, 0);
-  }
+  },
+
+  matches: Element.prototype.matches ||
+      Element.prototype.mozMatchesSelector ||
+      Element.prototype.msMatchesSelector ||
+      Element.prototype.oMatchesSelector ||
+      Element.prototype.webkitMatchesSelector
 };
