@@ -36,6 +36,11 @@
   opacity: 1.0;
 }
 
+.bountysource-thumbs-box .info-wrapper a,
+.bountysource-thumbs-box-mini .info-wrapper a {
+  color: #333;
+}
+
 
 .bountysource-thumbs-github.vis-public #partial-discussion-header { margin-left: 65px; }
 .bountysource-thumbs-github.vis-public .issue-meta { margin-top: 5px; }

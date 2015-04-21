@@ -113,7 +113,7 @@
 
   ThumbBox.prototype.setResponse = function(response) {
     this.api_response = response;
-    this.setInfoBox(response.thumbs_up_count);
+    this.setInfoBox(response.thumbs_up_count, 'https://www.bountysource.com/issues/' + response.issue_id);
     if (response.has_thumbed_up) {
       this.container.classList.add('has-thumbed-up');
     } else {
