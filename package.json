@@ -6,5 +6,12 @@
   "version": "0.0.14",
   "author": "Bountysource Inc.",
   "main": "./lib/bountysource_server.js",
-  "license": "BSD"
+  "license": "BSD",
+  "preferences": [{
+    "name": "hideThumbsup",
+    "title": "Thumbs up/+1",
+    "description": "Hide all comments with just :thumbsup: or +1",
+    "type": "bool",
+    "value": true
+  }]
 }
