@@ -14,7 +14,6 @@ var BountysourcePopup = {
     BountysourceClient.api({
       path: 'people/me'
     }, function(response) {
-      console.log("Call back");
       if (response.id) {
         // nav
         document.querySelector('#person-info-profile-link').classList.remove('hide');

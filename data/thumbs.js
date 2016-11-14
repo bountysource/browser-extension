@@ -132,7 +132,6 @@
           downvote: !!this.api_response.has_thumbed_up
         },
       }, function(response) {
-        debugger;
         if (!response) {
           console.log("ERROR5", response);
           this.setInfoBox('ERR5', 'https://github.com/bountysource/browser-extension/issues/22');
@@ -152,7 +151,6 @@
   var matches;
 
   // Bountysource
-  //debugger;
   if (document.location.host.match(/\.bountysource\.com$/)) {
     document.body.classList.add('bountysource-thumbs-extension-is-installed');
 
