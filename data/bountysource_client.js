@@ -1,6 +1,6 @@
 // Cross-browser helpers to be used in popups and content-scripts
 var BountysourceClient = {
-  browser: typeof(chrome)!=='undefined' ? 'chrome' : 'firefox',
+  browser: typeof(chrome)!=='undefined' ? 'chrome' : typeof(safari)!=='undefined' ? 'safari' : 'firefox',
 
   // Computes path to extension hosted image
   imagePath: function(image) {
@@ -8,6 +8,8 @@ var BountysourceClient = {
       return chrome.extension.getURL('data/images/' + image);
     } else if (self && self.options && self.options.image_base) {
       return self.options.image_base + image;
+    } else if (window.safari) {
+      return safari.extension.baseURI + 'data/images/' + image;
     }
   },
 
@@ -26,6 +28,30 @@ var BountysourceClient = {
       options.callback_str = "callback_" + (new Date()).getTime();
       self.port.once(options.callback_str, callback);
       self.port.emit("message", options);
+    } else if (BountysourceClient.browser === 'safari') {
+      // Check if is sending from popover or normal page
+      if (safari.self.tab) {
+        // Is normal page
+        // Equivalent code of self.port.once
+        options.callback_str = "callback_" + (new Date()).getTime();
+        var handler = function(event) {
+          if (event.name === options.callback_str) {
+            callback(event.message);
+            safari.self.removeEventListener('message', handler);
+          }
+        }
+        safari.self.addEventListener('message', handler, false);
+        safari.self.tab.dispatchMessage('message', options);
+      } else {
+        // Is popover
+        var BountysourceServer = safari.extension.globalPage.contentWindow.BountysourceServer;
+        BountysourceServer.get_access_token(function(access_token) {
+            options.access_token = access_token;
+            options.callback = callback;
+
+            BountysourceServer[options.action](options);
+          });
+      }
     }
   },
 

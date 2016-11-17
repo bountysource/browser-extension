@@ -5,6 +5,8 @@ var BountysourcePopup = {
     BountysourcePopup.setupTabHandlers();
     BountysourcePopup.setupFeedbackForm();
     BountysourcePopup.loadThumbs();
+    BountysourcePopup.setupLinks();
+    BountysourcePopup.setupForms();
   },
 
   loadCurrentPerson: function() {
@@ -122,6 +124,7 @@ var BountysourcePopup = {
         document.querySelector('#thumbs-message-none').classList.remove('hide');
       }
 
+      BountysourcePopup.setupLinks();
       BountysourcePopup.resizePopup();
     });
   },
@@ -183,6 +186,24 @@ var BountysourcePopup = {
       document.querySelector('#feedback-form').classList.add('hide');
       BountysourcePopup.resizePopup();
     });
+  },
+
+  setupLinks: function() {
+    if ((typeof(safari) !== 'undefined')) {
+      var links = document.querySelectorAll('a[target="_blank"]');
+      for (var i = 0; i < links.length; i++) {
+        links[i].removeAttribute('target'); 
+      }
+    }
+  },
+
+  setupForms: function() {
+    if ((typeof(safari) !== 'undefined')) {
+      var links = document.querySelectorAll('form[target="_blank"]');
+      for (var i = 0; i < links.length; i++) {
+        links[i].removeAttribute('target'); 
+      }
+    }
   }
 };
 

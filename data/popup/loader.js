@@ -3,7 +3,7 @@
 (function() {
   var scripts = ['../bountysource_client.js', 'application.js'];
 
-  if (typeof(chrome) !== 'undefined') {
+  if (typeof(chrome) !== 'undefined' || typeof(safari) !== 'undefined') {
     for (var i=0; i < scripts.length; i++) {
       var script_tag = document.createElement('script');
       script_tag.src = scripts[i];
